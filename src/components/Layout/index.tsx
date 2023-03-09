@@ -1,23 +1,20 @@
-import { Outlet } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
-import SideBar from "./SideBar";
+
 import { flexBox } from "../../styles/postion";
 
-const Layout = () => {
+type LayoutProps = {
+  children: React.ReactNode;
+};
+
+const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
-      <ContentBox>
-        <SideBar />
-        <Outlet />
-      </ContentBox>
+      {children}
     </>
   );
 };
 
 export default Layout;
-
-const ContentBox = styled.div`
-  ${flexBox({ justify: "flex-start", alignItem: "flex-start" })};
-`;

@@ -1,5 +1,12 @@
 import { createGlobalStyle } from "styled-components";
+import { generateMedia } from "styled-media-query";
 import reset from "styled-reset";
+import color from "./color";
+
+export const customMedia = generateMedia({
+  md: "768px",
+  lg: "1200px",
+});
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
@@ -19,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
     html, body {
     margin: 0;
     padding: 0;
+    background-color: ${color.background};
     }
 
     * {

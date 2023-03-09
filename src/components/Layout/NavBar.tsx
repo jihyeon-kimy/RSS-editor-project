@@ -3,21 +3,16 @@ import styled from "styled-components";
 import text from "../../styles/text";
 import color from "../../styles/color";
 import RouterInfo from "../../router/RouterInfo";
-import { AiOutlineClose } from "react-icons/ai";
+import { customMedia } from "../../styles/GlobalStyle";
+import { flexBox } from "../../styles/postion";
 
-interface SideBarProps {
-  onClose: () => void;
-  visibleSideBar: boolean;
-}
-
-const SideBar = ({ onClose, visibleSideBar }: SideBarProps) => {
+const NavBar = () => {
   // TODO: 로그인 기능 구현 후, 로그인 여부에 따라 필터링 되도록 코드 수정할 예정
   const NavTags = RouterInfo.filter((item) => item);
 
   return (
-    <Nav className={visibleSideBar ? "isOpen" : ""}>
+    <Nav>
       <h2 className="visually-hidden">메뉴</h2>
-      <AiOutlineClose className="closeButton" onClick={onClose} />
       <NavList>
         {NavTags.map((NavTag) => (
           <NavItem>
@@ -29,47 +24,57 @@ const SideBar = ({ onClose, visibleSideBar }: SideBarProps) => {
           </NavItem>
         ))}
       </NavList>
+      <LoginButton>MY PAGE</LoginButton>
     </Nav>
   );
 };
 
-export default SideBar;
+export default NavBar;
 
 const Nav = styled.nav`
-  position: fixed;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100vh;
-  padding: 30px 20px;
+  ${flexBox}
   background-color: ${color.background};
-  cursor: pointer;
-  transition: all 300ms ease-in-out;
-
-  .closeButton {
-    display: block;
-    font-size: 25px;
-  }
-
-  &.isOpen {
-    left: 0;
-  }
 `;
 
-const NavList = styled.ul`
-  padding-top: 30px;
-`;
+const NavList = styled.ul``;
 
 const NavItem = styled.li`
-  display: block;
-  padding-bottom: 10px;
+  display: inline-block;
+  margin-right: 10px;
 
   a {
-    ${text.textStyle18()};
+    ${text.textStyle16()};
     font-weight: 600;
 
     &.isActive {
       color: ${color.red};
     }
   }
+
+  ${customMedia.lessThan("lg")`
+    display: none;
+  `}
+`;
+
+const LoginButton = styled.button`
+  ${text.textStyle16()};
+  padding: 6px 15px;
+  font-weight: 600;
+  background-color: ${color.background};
+  border-radius: 9px;
+  border: 1px solid ${color.secondary};
+  transition: background-color 200ms ease-in-out;
+  cursor: pointer;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background-color: ${color.red};
+    border: 1px solid transparent;
+  }
+
+  ${customMedia.lessThan("md")`
+    ${text.textStyle14()};
+    border: 1px solid transparent;
+  `}
 `;

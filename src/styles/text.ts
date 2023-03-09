@@ -1,37 +1,54 @@
 import { css } from "styled-components";
+import color from "./color";
 
-export const textStyle12 = css`
-  font-size: 12px;
+const textStyle12 = (textColor: string = color.primary) => css`
+  color: ${textColor};
   line-height: 16px;
   letter-spacing: -0.005em;
 `;
 
-export const textStyle13 = css`
+const textStyle13 = (textColor: string = color.primary) => css`
+  color: ${textColor};
   font-size: 13px;
   line-height: 20px;
   letter-spacing: -0.001em;
 `;
 
-export const textStyle14 = css`
+const textStyle14 = (textColor: string = color.primary) => css`
+  color: ${textColor};
   font-size: 14px;
   line-height: 24px;
   letter-spacing: -0.001em;
 `;
 
-export const textStyle16 = css`
+const textStyle16 = (textColor: string = color.primary) => css`
+  color: ${textColor};
   font-size: 16px;
   line-height: 24px;
   letter-spacing: -0.001em;
 `;
 
-export const textStyle18 = css`
+const textStyle18 = (textColor: string = color.primary) => css`
+  color: ${textColor};
   font-size: 18px;
   line-height: 28px;
   letter-spacing: -0.002em;
 `;
 
-export const textStyle24 = css`
+const textStyle24 = (textColor: string = color.primary) => css`
+  color: ${textColor};
   font-size: 24px;
   line-height: 34px;
   letter-spacing: -0.001em;
 `;
+
+const text = {
+  textStyle12,
+  textStyle13,
+  textStyle14,
+  textStyle16,
+  textStyle18,
+  textStyle24,
+};
+
+export default text;

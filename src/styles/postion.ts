@@ -1,9 +1,21 @@
 import { css } from "styled-components";
 
 interface flexBoxProps {
-  direction?: string;
-  justify?: string;
-  alignItem?: string;
+  direction?: "row" | "column";
+  justify?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+  alignItem?:
+    | "flex-start"
+    | "flex-end"
+    | "center"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
 }
 
 export const flexBox = (obj: flexBoxProps) => css`

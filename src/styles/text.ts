@@ -3,6 +3,7 @@ import color from "./color";
 
 const textStyle12 = (textColor: string = color.primary) => css`
   color: ${textColor};
+  font-size: 12px;
   line-height: 16px;
   letter-spacing: -0.005em;
 `;

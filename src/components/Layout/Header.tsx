@@ -8,6 +8,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { customMedia } from "../../styles/GlobalStyle";
 import SideBar from "./SideBar";
 import { useState } from "react";
+import zIndex from "../../styles/z-index";
 
 const Header = () => {
   const [visibleSideBar, setVisibleSideBar] = useState(false);
@@ -36,8 +37,14 @@ export default Header;
 
 const HeaderContainer = styled.header`
   ${flexBox({ justify: "space-between" })}
+  position:fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   padding: 25px;
+  background-color: ${color.background};
   border-bottom: 1px solid ${color.border};
+  z-index: ${zIndex.headerLevel};
 
   .menuButton {
     display: none;
@@ -53,12 +60,8 @@ const HeaderContainer = styled.header`
 `;
 
 const Title = styled.h1`
-  ${text.textStyle24(color.red)}
+  ${text.textStyle24(color.blue)}
   display: inline-block;
   font-weight: 600;
   cursor: pointer;
-
-  ${customMedia.lessThan("md")`
-    ${text.textStyle18(color.red)}
-  `}
 `;

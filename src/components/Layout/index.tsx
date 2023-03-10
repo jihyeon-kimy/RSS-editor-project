@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import Header from "./Header";
 
-import { flexBox } from "../../styles/postion";
-
 type LayoutProps = {
   children: React.ReactNode;
 };
@@ -12,9 +10,13 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
-      {children}
+      <Contents>{children}</Contents>
     </>
   );
 };
 
 export default Layout;
+
+const Contents = styled.div`
+  margin-top: 90px;
+`;

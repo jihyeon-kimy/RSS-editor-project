@@ -14,8 +14,8 @@ const NavBar = () => {
     <Nav>
       <h2 className="visually-hidden">메뉴</h2>
       <NavList>
-        {NavTags.map((NavTag) => (
-          <NavItem>
+        {NavTags.map((NavTag, idx) => (
+          <NavItem key={idx}>
             <NavLink
               to={NavTag.path}
               className={({ isActive }) => (isActive ? "isActive" : "")}>
@@ -47,7 +47,7 @@ const NavItem = styled.li`
     font-weight: 600;
 
     &.isActive {
-      color: ${color.red};
+      color: ${color.blueDark};
     }
   }
 
@@ -69,12 +69,13 @@ const LoginButton = styled.button`
   &:hover,
   &:active,
   &:focus {
-    background-color: ${color.red};
-    border: 1px solid transparent;
+    background-color: ${color.blueLight};
+    /* border: 1px solid transparent; */
   }
 
   ${customMedia.lessThan("md")`
     ${text.textStyle14()};
     border: 1px solid transparent;
+    padding: 0;
   `}
 `;

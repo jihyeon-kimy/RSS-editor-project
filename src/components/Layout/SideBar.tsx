@@ -19,8 +19,8 @@ const SideBar = ({ onClose, visibleSideBar }: SideBarProps) => {
       <h2 className="visually-hidden">메뉴</h2>
       <AiOutlineClose className="closeButton" onClick={onClose} />
       <NavList>
-        {NavTags.map((NavTag) => (
-          <NavItem>
+        {NavTags.map((NavTag, idx) => (
+          <NavItem key={idx}>
             <NavLink
               to={NavTag.path}
               className={({ isActive }) => (isActive ? "isActive" : "")}>
@@ -69,7 +69,7 @@ const NavItem = styled.li`
     font-weight: 600;
 
     &.isActive {
-      color: ${color.red};
+      color: ${color.blueDark};
     }
   }
 `;

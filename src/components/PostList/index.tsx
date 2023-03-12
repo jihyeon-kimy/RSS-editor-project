@@ -1,74 +1,75 @@
 import { useEffect } from "react";
-import styled from "styled-components";
-import color from "../../styles/color";
-import text from "../../styles/text";
-import { customMedia } from "../../styles/GlobalStyle";
 import PostItem from "./PostItem";
-import { asyncGetPosts } from "../../store/postSlice";
+import { asyncGetPosts, selectPosts, selectStatus } from "../../store/postSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import LoadingSpinner from "../Common/LoadingSpinner";
+import styled from "styled-components";
+import { flexBox } from "../../styles/postion";
+import text from "../../styles/text";
 
 const PostList = () => {
   const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.post.value);
+  const posts = useAppSelector(selectPosts);
+  const status = useAppSelector(selectStatus);
+  const CORSAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
 
   useEffect(() => {
     dispatch(asyncGetPosts());
   }, [dispatch]);
 
-  console.log(posts);
+  if (status === "Loading") {
+    return (
+      <FlexBox>
+        <LoadingSpinner />
+      </FlexBox>
+    );
+  }
+
+  if (status === "Fail") {
+    return (
+      <FlexBox>
+        <h4>❌로딩에 실패했습니다❌</h4>
+        <button
+          onClick={() => {
+            window.open(CORSAnywhereUrl);
+          }}>
+          CORS ANYWHERE
+        </button>
+        <p>위 페이지에 접속하여 CORS Anywhere 서버를 실행한 후에 새로고침 해주세요!</p>
+      </FlexBox>
+    );
+  }
+
   return (
-    <PostListContainer>
-      <Title>
-        <h3>피드 리스트</h3>
-        <strong>편하게 모아보는 꿀같은 피드</strong>
-      </Title>
-      <List>
-        {posts?.map((newPostItem, idx) => (
-          <PostItem
-            key={idx}
-            id={idx}
-            title={newPostItem?.title}
-            content={newPostItem[`content:encodedSnippet`] || newPostItem.contentSnippet}
-            author={newPostItem?.creator || newPostItem?.author}
-            date={newPostItem?.isoDate?.substr(0, 10)}
-          />
-        ))}
-      </List>
-    </PostListContainer>
+    <ol>
+      {posts?.map((newPostItem, idx) => (
+        <PostItem
+          key={idx}
+          id={idx}
+          title={newPostItem?.title}
+          content={newPostItem[`content:encodedSnippet`] || newPostItem.contentSnippet}
+          author={newPostItem?.creator || newPostItem?.author}
+          date={newPostItem?.isoDate?.substr(0, 10)}
+        />
+      ))}
+    </ol>
   );
 };
 
 export default PostList;
 
-const PostListContainer = styled.section`
-  max-width: 1100px;
-  margin: 0 auto;
-`;
+const FlexBox = styled.div`
+  ${flexBox({ direction: "column" })}
+  padding: 20px;
+  ${text.textStyle18()};
 
-const Title = styled.div`
-  padding: 50px 25px 30px;
-  font-weight: 600;
-
-  h3 {
-    ${text.textStyle24()};
+  h4 {
+    font-weight: 600;
+    margin-bottom: 30px;
   }
 
-  strong {
+  button {
     ${text.textStyle18()};
+    cursor: pointer;
   }
-`;
-
-const List = styled.ol`
-  margin: 0 auto;
-  margin: 10px;
-  background-color: ${color.white};
-  border: 1px solid ${color.border};
-  border-radius: 10px;
-
-  ${customMedia.lessThan("md")`
-    margin: 0;
-    border-radius: none;
-    border-top: 1px solid ${color.border};
-    border-bottom: 1px solid ${color.border};
-  `}
 `;

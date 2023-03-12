@@ -23,12 +23,14 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <GiHamburgerMenu className="menuButton" onClick={openSideBarHandler} />
-      <SideBar onClose={closeSideBarHandler} visibleSideBar={visibleSideBar} />
-      <Link to="/">
-        <Title>RSS-Reader</Title>
-      </Link>
-      <NavBar />
+      <div>
+        <GiHamburgerMenu className="menuButton" onClick={openSideBarHandler} />
+        <SideBar onClose={closeSideBarHandler} visibleSideBar={visibleSideBar} />
+        <Link to="/">
+          <Title>RSS-Reader</Title>
+        </Link>
+        <NavBar />
+      </div>
     </HeaderContainer>
   );
 };
@@ -36,8 +38,7 @@ const Header = () => {
 export default Header;
 
 const HeaderContainer = styled.header`
-  ${flexBox({ justify: "space-between" })}
-  position:fixed;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -45,6 +46,12 @@ const HeaderContainer = styled.header`
   background-color: ${color.background};
   border-bottom: 1px solid ${color.border};
   z-index: ${zIndex.headerLevel};
+
+  div {
+    ${flexBox({ justify: "space-between" })}
+    max-width: 1050px;
+    margin: 0 auto;
+  }
 
   .menuButton {
     display: none;

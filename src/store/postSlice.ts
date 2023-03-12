@@ -22,7 +22,7 @@ export const asyncGetPosts = createAsyncThunk("postSlice/asyncGetPosts", async (
 
 interface postState {
   value: any[] | undefined;
-  status: string;
+  status: "Loading" | "Complete" | "Fail";
 }
 
 const initialState: postState = {
@@ -42,12 +42,13 @@ export const postSlice = createSlice({
       state.status = "Complete";
     });
     builder.addCase(asyncGetPosts.rejected, (state) => {
-      state.status = "fail";
+      state.status = "Fail";
     });
   },
   reducers: {},
 });
 
-export const selectPost = (state: RootState) => state.post.value;
+export const selectPosts = (state: RootState) => state.post.value;
+export const selectStatus = (state: RootState) => state.post.status;
 
 export default postSlice.reducer;

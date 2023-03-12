@@ -1,4 +1,4 @@
-import PostItemPage from "../pages/PostItemPage";
+import PostDetailPage from "../pages/PostDetailPage";
 import PostListPage from "../pages/PostListPage";
 
 export interface RouterItem {
@@ -19,7 +19,7 @@ const RouterInfo: RouterItem[] = [
   },
   {
     path: "/post/:postId",
-    element: <PostItemPage />,
+    element: <PostDetailPage />,
     withAuthorization: false,
     label: "New Post",
     IsOnNav: false,

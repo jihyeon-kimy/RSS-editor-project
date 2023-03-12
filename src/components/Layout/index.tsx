@@ -18,5 +18,6 @@ const Layout = ({ children }: LayoutProps) => {
 export default Layout;
 
 const Contents = styled.div`
-  margin-top: 90px;
+  max-width: 1100px;
+  margin: 100px auto 0;
 `;

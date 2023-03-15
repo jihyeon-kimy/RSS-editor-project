@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import RSSParser from "rss-parser";
 import { RootState } from ".";
-import subscribeList from "../components/PostList/subscribeList";
+import SUBSCRIBE_LIST from "../components/PostList/subscribeList";
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
@@ -10,11 +10,16 @@ export const asyncGetPosts = createAsyncThunk("postSlice/asyncGetPosts", async (
   const parser = new RSSParser();
   let parsedPosts: any[] = [];
 
-  for await (let subscribeItem of subscribeList) {
+  for await (let subscribeItem of SUBSCRIBE_LIST) {
     if (!subscribeItem.enabled) return;
-
-    let parsedPost = await parser.parseURL(CORS_PROXY + subscribeItem.rssLink);
-    parsedPosts = [...parsedPosts, ...parsedPost.items];
+    try {
+      let parsedPost = await parser.parseURL(CORS_PROXY + subscribeItem.rssLink);
+      parsedPosts = [...parsedPosts, ...parsedPost.items];
+    } catch {
+      console.log(
+        `🚒삐뽀삐보🚒 ${subscribeItem.name} 피드 파싱 에러 발생! RSSLink 오타 혹은 CORS보안 이슈로 브라우저에 로드가 안되는 것인지 확인하세요!`
+      );
+    }
   }
 
   return parsedPosts;

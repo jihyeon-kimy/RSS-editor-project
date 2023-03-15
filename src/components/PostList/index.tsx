@@ -1,23 +1,24 @@
 import { useEffect } from "react";
 import PostItem from "./PostItem";
 import { asyncGetPosts, selectPosts, selectStatus } from "../../store/postSlice";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import styled from "styled-components";
 import { flexBox } from "../../styles/postion";
 import text from "../../styles/text";
 
+const CORSAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+
 const PostList = () => {
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectPosts);
-  const status = useAppSelector(selectStatus);
-  const CORSAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
+  const postLoadingStatus = useAppSelector(selectStatus);
 
   useEffect(() => {
     dispatch(asyncGetPosts());
   }, [dispatch]);
 
-  if (status === "Loading") {
+  if (postLoadingStatus === "Loading") {
     return (
       <FlexBox>
         <LoadingSpinner />
@@ -25,7 +26,7 @@ const PostList = () => {
     );
   }
 
-  if (status === "Fail") {
+  if (postLoadingStatus === "Fail") {
     return (
       <FlexBox>
         <h4>❌로딩에 실패했습니다❌</h4>
@@ -47,7 +48,7 @@ const PostList = () => {
           key={idx}
           id={idx}
           title={newPostItem?.title}
-          content={newPostItem[`content:encodedSnippet`] || newPostItem.contentSnippet}
+          content={newPostItem[`content:encodedSnippet`] || newPostItem?.contentSnippet}
           author={newPostItem?.creator || newPostItem?.author}
           date={newPostItem?.isoDate?.substr(0, 10)}
         />
@@ -64,8 +65,8 @@ const FlexBox = styled.div`
   ${text.textStyle18()};
 
   h4 {
-    font-weight: 600;
     margin-bottom: 30px;
+    font-weight: 600;
   }
 
   button {

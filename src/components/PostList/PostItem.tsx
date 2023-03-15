@@ -3,7 +3,7 @@ import color from "../../styles/color";
 import { flexBox } from "../../styles/postion";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import text from "../../styles/text";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "../../hooks/useRouter";
 
 interface PostItemProps {
   id: number;
@@ -14,13 +14,14 @@ interface PostItemProps {
 }
 
 const PostItem = ({ id, title, content, author, date }: PostItemProps) => {
-  const navigate = useNavigate();
+  const { routeTo } = useRouter();
+
   // TODO: 게시물 좋아요 버튼(하트)는 우선 기능없이 붙여둔 상태
 
   return (
     <PostItemContainer
       onClick={() => {
-        navigate(`/post/${id}`);
+        routeTo(`/post/${id}`);
       }}>
       <h5>{title}</h5>
       <p>{content}</p>

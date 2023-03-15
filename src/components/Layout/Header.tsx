@@ -2,34 +2,25 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import color from "../../styles/color";
 import text from "../../styles/text";
-import NavBar from "./NavBar";
+import Nav from "./Nav";
 import { flexBox } from "../../styles/postion";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { customMedia } from "../../styles/GlobalStyle";
-import SideBar from "./SideBar";
-import { useState } from "react";
 import zIndex from "../../styles/z-index";
 
-const Header = () => {
-  const [visibleSideBar, setVisibleSideBar] = useState(false);
+interface HeaderProps {
+  onOpenSideBar: () => void;
+}
 
-  const openSideBarHandler = () => {
-    setVisibleSideBar(true);
-  };
-
-  const closeSideBarHandler = () => {
-    setVisibleSideBar(false);
-  };
-
+const Header = ({ onOpenSideBar }: HeaderProps) => {
   return (
     <HeaderContainer>
       <div>
-        <GiHamburgerMenu className="menuButton" onClick={openSideBarHandler} />
-        <SideBar onClose={closeSideBarHandler} visibleSideBar={visibleSideBar} />
+        <GiHamburgerMenu className="menuButton" onClick={onOpenSideBar} />
         <Link to="/">
           <Title>RSS-Reader</Title>
         </Link>
-        <NavBar />
+        <Nav />
       </div>
     </HeaderContainer>
   );
@@ -67,7 +58,7 @@ const HeaderContainer = styled.header`
 `;
 
 const Title = styled.h1`
-  ${text.textStyle24(color.blue)}
+  ${text.textStyle30(color.blue)}
   display: inline-block;
   font-weight: 600;
   cursor: pointer;

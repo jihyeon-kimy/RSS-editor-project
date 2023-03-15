@@ -2,8 +2,11 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import text from "../../styles/text";
 import color from "../../styles/color";
-import RouterInfo from "../../router/RouterInfo";
 import { AiOutlineClose } from "react-icons/ai";
+import zIndex from "../../styles/z-index";
+import { withAuthNavContent, withoutAuthNavContent } from "../../router";
+import { useAppSelector } from "../../hooks/useRedux";
+import { selectIsLoggedIn } from "../../store/authSlice";
 
 interface SideBarProps {
   onClose: () => void;
@@ -11,31 +14,31 @@ interface SideBarProps {
 }
 
 const SideBar = ({ onClose, visibleSideBar }: SideBarProps) => {
-  // TODO: 로그인 기능 구현 후, 로그인 여부에 따라 필터링 되도록 코드 수정할 예정
-  const NavTags = RouterInfo.filter((item) => item);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const NavContent = isLoggedIn ? withAuthNavContent : withoutAuthNavContent;
 
   return (
-    <Nav className={visibleSideBar ? "isOpen" : ""}>
+    <SideBarContainer className={visibleSideBar ? "isOpen" : ""}>
       <h2 className="visually-hidden">메뉴</h2>
       <AiOutlineClose className="closeButton" onClick={onClose} />
-      <NavList>
-        {NavTags.map((NavTag, idx) => (
-          <NavItem key={idx}>
+      <SideBarList>
+        {NavContent.map((NavTag, idx) => (
+          <SideBarItem key={idx}>
             <NavLink
               to={NavTag.path}
               className={({ isActive }) => (isActive ? "isActive" : "")}>
               {NavTag.label}
             </NavLink>
-          </NavItem>
+          </SideBarItem>
         ))}
-      </NavList>
-    </Nav>
+      </SideBarList>
+    </SideBarContainer>
   );
 };
 
 export default SideBar;
 
-const Nav = styled.nav`
+const SideBarContainer = styled.nav`
   position: fixed;
   top: 0;
   left: -100%;
@@ -45,6 +48,7 @@ const Nav = styled.nav`
   background-color: ${color.background};
   cursor: pointer;
   transition: all 300ms ease-in-out;
+  z-index: ${zIndex.sideBarLevel};
 
   .closeButton {
     display: block;
@@ -56,11 +60,11 @@ const Nav = styled.nav`
   }
 `;
 
-const NavList = styled.ul`
+const SideBarList = styled.ul`
   padding-top: 30px;
 `;
 
-const NavItem = styled.li`
+const SideBarItem = styled.li`
   display: block;
   padding-bottom: 10px;
 

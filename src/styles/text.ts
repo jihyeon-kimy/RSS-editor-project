@@ -43,6 +43,13 @@ const textStyle24 = (textColor: string = color.primary) => css`
   letter-spacing: -0.001em;
 `;
 
+const textStyle30 = (textColor: string = color.primary) => css`
+  color: ${textColor};
+  font-size: 30px;
+  line-height: 40px;
+  letter-spacing: -0.001em;
+`;
+
 const text = {
   textStyle12,
   textStyle13,
@@ -50,6 +57,7 @@ const text = {
   textStyle16,
   textStyle18,
   textStyle24,
+  textStyle30,
 };
 
 export default text;

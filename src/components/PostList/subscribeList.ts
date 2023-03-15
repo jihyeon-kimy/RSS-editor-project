@@ -1,4 +1,4 @@
-const subscribeList = [
+const SUBSCRIBE_LIST = [
   {
     name: "29CM",
     rssLink: "https://medium.com/feed/29cm",
@@ -30,20 +30,10 @@ const subscribeList = [
     enabled: true,
   },
   {
-    name: "마켓컬리",
-    rssLink: "https://helloworld.kurly.com/feed.xml",
-    enabled: true,
-  },
-  {
-    name: "뱅크샐러드",
-    rssLink: "https://blog.banksalad.com/rss.xml",
-    enabled: true,
-  },
-  {
     name: "쏘카",
     rssLink: "https://tech.socarcorp.kr/feed.xml",
     enabled: true,
   },
 ];
 
-export default subscribeList;
+export default SUBSCRIBE_LIST;

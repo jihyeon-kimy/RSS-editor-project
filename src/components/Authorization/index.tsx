@@ -21,7 +21,7 @@ const Authorization = ({ children }: AuthorizationProps) => {
 
   useEffect(() => {
     verifyLocalStorageToken();
-  }, []);
+  }, [children]);
 
   return <>{children}</>;
 };

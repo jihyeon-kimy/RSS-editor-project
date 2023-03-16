@@ -33,7 +33,7 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(asyncVerifyToken.pending, (state) => {
-      state.isLoggedIn = !getTokenToLocalStorage();
+      state.isLoggedIn = !!getTokenToLocalStorage();
     });
     builder.addCase(asyncVerifyToken.fulfilled, (state, action) => {
       state.isLoggedIn = true;

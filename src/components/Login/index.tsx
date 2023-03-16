@@ -124,9 +124,11 @@ const LoginForm = styled.form`
   ${flexBox({ direction: "column", alignItem: "flex-start" })}
 
   input {
-    width: 300px;
-    height: 40px;
+    ${text.textStyle16()}
+    width: 350px;
+    height: 50px;
     margin-bottom: 8px;
+    padding: 10px;
     border-radius: 5px;
     border: 1px solid ${color.border};
     outline: none;
@@ -153,13 +155,13 @@ const LoginForm = styled.form`
 `;
 
 const LoginButton = styled.div`
-  height: 45px;
+  height: 50px;
   margin-top: 20px;
 
   button {
     ${text.textStyle16(color.white)}
-    width: 300px;
-    height: 45px;
+    width: 350px;
+    height: 50px;
     background-color: ${color.blue};
     border-radius: 5px;
     border: none;

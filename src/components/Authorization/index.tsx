@@ -1,7 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { useAppDispatch } from "../../hooks/useRedux";
 import { useRouter } from "../../hooks/useRouter";
-import { asyncVerifyToken } from "../../store/authSlice";
+import { validateToken } from "../../lib/token/validateToken";
+import { login, logout } from "../../store/authSlice";
 
 interface AuthorizationProps {
   children: React.ReactNode;
@@ -11,16 +12,17 @@ const Authorization = ({ children }: AuthorizationProps) => {
   const { routeTo } = useRouter();
   const dispatch = useAppDispatch();
 
-  const verifyLocalStorageToken = useCallback(async () => {
-    const result = await dispatch(asyncVerifyToken());
-
-    if (result.meta.requestStatus === "rejected") {
-      return routeTo("/login");
+  const verifyStorageToken = useCallback(async () => {
+    const verifyRes = await validateToken();
+    if (!verifyRes) {
+      dispatch(logout());
+      routeTo("/login");
     }
+    dispatch(login(verifyRes));
   }, [dispatch, routeTo]);
 
   useEffect(() => {
-    verifyLocalStorageToken();
+    verifyStorageToken();
   }, [children]);
 
   return <>{children}</>;

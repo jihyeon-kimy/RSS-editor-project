@@ -1,9 +1,11 @@
+import { useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { postLogin } from "../../api/auth";
 import { useAppDispatch } from "../../hooks/useRedux";
 import { useRouter } from "../../hooks/useRouter";
+import { validateToken } from "../../lib/token/validateToken";
 import { login } from "../../store/authSlice";
 import color from "../../styles/color";
 import { flexBox } from "../../styles/postion";
@@ -23,15 +25,35 @@ const Login = () => {
     formState: { isSubmitting, errors },
   } = useForm<formValues>();
 
+  const verifyTokenFromStorage = useCallback(async () => {
+    const verifyRes = await validateToken();
+    if (!!verifyRes) {
+      // TODO: 자동 로그인이 되었다는 알림 표시
+      dispatch(login(verifyRes));
+      routeTo("/");
+    }
+  }, [dispatch, routeTo]);
+
+  useEffect(() => {
+    verifyTokenFromStorage();
+  }, []);
+
   const submitHandler = async (userData: formValues) => {
     try {
       const loginRes = await postLogin(userData);
       if (loginRes.status === 200) {
-        dispatch(login(loginRes.data.refreshToken));
+        const expirationTime = new Date(
+          new Date().getTime() + +loginRes.data.expiresIn * 1000
+        );
+        dispatch(
+          login({
+            refreshToken: loginRes.data.refreshToken,
+            expiresIn: expirationTime.toString(),
+          })
+        );
         routeTo("/");
       }
     } catch (error) {
-      // TODO: 에러 상황에 따른 안내 모달만들기
       alert(`에러발생 ${error}`);
       console.log("에러발생", error);
     }

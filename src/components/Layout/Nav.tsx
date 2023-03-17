@@ -4,18 +4,14 @@ import text from "../../styles/text";
 import color from "../../styles/color";
 import { customMedia } from "../../styles/GlobalStyle";
 import { flexBox } from "../../styles/postion";
-import { withAuthNavContent, withoutAuthNavContent } from "../../router";
-import { useAppSelector } from "../../hooks/useRedux";
-import { selectIsLoggedIn } from "../../store/authSlice";
+import { NavContent } from "../../router";
 
 const Nav = () => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const NavContent = isLoggedIn ? withAuthNavContent : withoutAuthNavContent;
   return (
     <NavContainer>
       <h2 className="visually-hidden">메뉴</h2>
       <ul>
-        {NavContent.map((NavTag, idx) => (
+        {NavContent().map((NavTag, idx) => (
           <NavItem key={idx}>
             <NavLink
               to={NavTag.path}

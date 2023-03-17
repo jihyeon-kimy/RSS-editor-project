@@ -1,5 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Authorization from "../components/Authorization";
+import { useAppSelector } from "../hooks/useRedux";
+import { selectIsLoggedIn } from "../store/authSlice";
 import RouterInfo, { RouterItem } from "./RouterInfo";
 
 export const routers = createBrowserRouter(
@@ -24,16 +26,21 @@ interface NavElement {
   path: string;
 }
 
-export const withAuthNavContent = RouterInfo.reduce((prev, router) => {
+const withAuthNavContent = RouterInfo.reduce((prev, router) => {
   if (router.IsOnNav)
     return [...prev, { id: router.id, path: router.path, label: router.label }];
 
   return prev;
 }, [] as NavElement[]);
 
-export const withoutAuthNavContent = RouterInfo.reduce((prev, router) => {
+const withoutAuthNavContent = RouterInfo.reduce((prev, router) => {
   if (!router.withAuthorization && router.IsOnNav)
     return [...prev, { id: router.id, path: router.path, label: router.label }];
 
   return prev;
 }, [] as NavElement[]);
+
+export const NavContent = () => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  return isLoggedIn ? withAuthNavContent : withoutAuthNavContent;
+};

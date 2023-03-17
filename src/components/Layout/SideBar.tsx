@@ -4,9 +4,7 @@ import text from "../../styles/text";
 import color from "../../styles/color";
 import { AiOutlineClose } from "react-icons/ai";
 import zIndex from "../../styles/z-index";
-import { withAuthNavContent, withoutAuthNavContent } from "../../router";
-import { useAppSelector } from "../../hooks/useRedux";
-import { selectIsLoggedIn } from "../../store/authSlice";
+import { NavContent } from "../../router";
 
 interface SideBarProps {
   onClose: () => void;
@@ -14,15 +12,12 @@ interface SideBarProps {
 }
 
 const SideBar = ({ onClose, visibleSideBar }: SideBarProps) => {
-  const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const NavContent = isLoggedIn ? withAuthNavContent : withoutAuthNavContent;
-
   return (
     <SideBarContainer className={visibleSideBar ? "isOpen" : ""}>
       <h2 className="visually-hidden">메뉴</h2>
       <AiOutlineClose className="closeButton" onClick={onClose} />
       <SideBarList>
-        {NavContent.map((NavTag, idx) => (
+        {NavContent().map((NavTag, idx) => (
           <SideBarItem key={idx}>
             <NavLink
               to={NavTag.path}

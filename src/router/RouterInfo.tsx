@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import PostListPage from "../pages/PostListPage";
 import SignupPage from "../pages/SignupPage";
+import SubcribePage from "../pages/SubcribePage";
 
 export interface RouterItem {
   id: number;
@@ -38,14 +39,14 @@ const RouterInfo: RouterItem[] = [
     label: "북마크",
     IsOnNav: true,
   },
-  // {
-  //   id: 3,
-  //   path: "/signup",
-  //   element: <SignupPage />,
-  //   withAuthorization: false,
-  //   label: "구독관리",
-  //   IsOnNav: true,
-  // },
+  {
+    id: 3,
+    path: "/subscribe",
+    element: <SubcribePage />,
+    withAuthorization: true,
+    label: "구독관리",
+    IsOnNav: true,
+  },
   {
     id: 4,
     path: "/login",

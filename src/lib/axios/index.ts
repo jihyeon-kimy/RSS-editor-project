@@ -1,10 +1,17 @@
 import axios from "axios";
 
-const BASE_URL = "https://identitytoolkit.googleapis.com/v1";
+const Auth_URL = "https://identitytoolkit.googleapis.com/v1";
+const Database_URL =
+  "https://rss-reader-816c7-default-rtdb.asia-southeast1.firebasedatabase.app/users";
 
-export const customAxios = axios.create({
-  baseURL: BASE_URL,
+export const customAuthAxios = axios.create({
+  baseURL: Auth_URL,
   headers: {
     "Content-Type": "application/json",
   },
+});
+
+export const customDatabaseAxios = axios.create({
+  baseURL: Database_URL,
+  headers: { "Content-Type": "application/json" },
 });

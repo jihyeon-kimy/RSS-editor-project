@@ -3,9 +3,7 @@ import PostItem from "./PostItem";
 import { asyncGetPosts, selectPosts, selectStatus } from "../../store/postSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import LoadingSpinner from "../Common/LoadingSpinner";
-import styled from "styled-components";
-import { flexBox } from "../../styles/postion";
-import text from "../../styles/text";
+import { FlexBox } from "./style";
 
 const CORSAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
 
@@ -26,7 +24,7 @@ const PostList = () => {
     );
   }
 
-  if (postLoadingStatus === "Fail") {
+  if (postLoadingStatus === "Fail" || posts?.length === 0) {
     return (
       <FlexBox>
         <h4>❌로딩에 실패했습니다❌</h4>
@@ -58,19 +56,3 @@ const PostList = () => {
 };
 
 export default PostList;
-
-const FlexBox = styled.div`
-  ${flexBox({ direction: "column" })}
-  padding: 20px;
-  ${text.textStyle18()};
-
-  h4 {
-    margin-bottom: 30px;
-    font-weight: 600;
-  }
-
-  button {
-    ${text.textStyle18()};
-    cursor: pointer;
-  }
-`;

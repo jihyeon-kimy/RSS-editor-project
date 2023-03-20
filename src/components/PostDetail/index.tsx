@@ -1,24 +1,19 @@
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { asyncGetPosts, selectPosts } from "../../store/postSlice";
-import color from "../../styles/color";
-import { customMedia } from "../../styles/GlobalStyle";
-import text from "../../styles/text";
 import Card from "../Common/Card";
+import { PostContent, PostHeader, Updated } from "./style";
 
 const PostDetail = () => {
   const { postId } = useParams()!;
   const dispatch = useAppDispatch();
   const posts = useAppSelector(selectPosts);
-  let post;
+  const post = posts && postId && posts[+postId];
+  // NOTE : posts가 undefined이거나 postId가 undefined일 수 있어서 타입에러 해결하려고 &&로 연결했는데, 가독성이 떨어지는 것 같다.
+  // 더 좋은 방법이 뭔지 아직 모르겠다.
 
   if (posts?.length === 0) {
     dispatch(asyncGetPosts());
-  }
-
-  if (posts && postId) {
-    post = posts[+postId];
   }
 
   return (
@@ -38,57 +33,3 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
-
-const PostHeader = styled.div`
-  position: relative;
-  padding: 20px 0;
-  margin-bottom: 20px;
-  border-bottom: 1px solid ${color.border};
-
-  h2 {
-    ${text.textStyle24()}
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-
-  span {
-    ${text.textStyle16(color.secondary)}
-    font-weight: 500;
-  }
-
-  ${customMedia.lessThan("md")`
-  h2{
-    ${text.textStyle18()}
-  }
-  `}
-`;
-
-const Updated = styled.span`
-  position: absolute;
-  right: 0;
-`;
-
-const PostContent = styled.div`
-  ${text.textStyle14()}
-
-  p {
-    margin-bottom: 20px;
-  }
-
-  img {
-    width: 100%;
-  }
-
-  pre,
-  a {
-    display: inline-block;
-    width: 100%;
-    overflow: auto;
-  }
-
-  pre {
-    background-color: ${color.blueLight};
-    padding: 5px;
-    border-radius: 5px;
-  }
-`;

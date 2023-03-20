@@ -7,7 +7,7 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [visibleSideBar, setVisibleSideBar] = useState(false);
 
   const openSideBarHandler = () => {

@@ -1,4 +1,4 @@
-import PageHeader from "../components/PostList/PageHeader";
+import PageHeader from "../components/Common/PageHeader";
 import Card from "../components/Common/Card";
 import Layout from "../components/Layout";
 import PostList from "../components/PostList";

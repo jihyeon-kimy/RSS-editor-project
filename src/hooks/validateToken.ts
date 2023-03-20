@@ -1,5 +1,5 @@
-import { getUserDataFromStorage } from ".";
-import { postReNewToken } from "../../api/token";
+import { getUserDataFromStorage } from "../lib/token";
+import { FB_ReNewToken } from "../api/token";
 
 const calculateRemainingTime = (expirationTime: string) => {
   const currentTime = new Date().getTime();
@@ -19,7 +19,7 @@ export const validateToken = async () => {
   // 2. 남은 시간이 1분보다 작을 경우, refresh토큰으로 새로운 토큰 발급(refresh토큰 오류: 로그아웃)
   if (remainingTime <= 6000) {
     try {
-      const verifyTokenRes = await postReNewToken();
+      const verifyTokenRes = await FB_ReNewToken();
       const expirationTime = new Date(
         new Date().getTime() + +verifyTokenRes.data.expires_in * 1000
       );

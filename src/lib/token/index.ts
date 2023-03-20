@@ -1,25 +1,35 @@
-const RSS_REFRESH_TOKEN_KEY = "RSS_REFRESH_TOKEN_KEY" as const;
-const RSS_EXPIRATION_TIME = "RSS_EXPIRATION_TIME" as const;
+const RSS_USER_DATA = "RSS_USER_DATA" as const;
 
-interface userData {
+interface userDatas {
+  email: string;
   refreshToken: string;
   expiresIn: string;
 }
 
-export const saveUserDataToStorage = ({ refreshToken, expiresIn }: userData) => {
-  localStorage.setItem(RSS_REFRESH_TOKEN_KEY, refreshToken);
-  localStorage.setItem(RSS_EXPIRATION_TIME, expiresIn);
+type userData = "email" | "refreshToken" | "expiresIn" | "all";
+
+export const saveUserDataToStorage = (userDatas: userDatas) => {
+  localStorage.setItem(RSS_USER_DATA, JSON.stringify(userDatas));
 };
 
-export const getRefreshTokenFromStorage = (): string => {
-  return localStorage.getItem(RSS_REFRESH_TOKEN_KEY) || "";
-};
+export const getUserDataFromStorage = (userData: userData) => {
+  if (localStorage.getItem(RSS_USER_DATA) === null) return;
+  const getUserDataRes = JSON.parse(localStorage.getItem(RSS_USER_DATA)!);
 
-export const getExpirationTimeFromStorage = (): string => {
-  return localStorage.getItem(RSS_EXPIRATION_TIME) || "";
+  switch (userData) {
+    case "email":
+      return getUserDataRes.email;
+    case "refreshToken":
+      return getUserDataRes.refreshToken;
+    case "expiresIn":
+      return getUserDataRes.expiresIn;
+    case "all":
+      return getUserDataRes;
+    default:
+      return "";
+  }
 };
 
 export const removeUserDataFromStorage = () => {
-  localStorage.removeItem(RSS_REFRESH_TOKEN_KEY);
-  localStorage.removeItem(RSS_EXPIRATION_TIME);
+  localStorage.removeItem(RSS_USER_DATA);
 };

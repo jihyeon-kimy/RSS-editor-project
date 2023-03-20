@@ -1,12 +1,12 @@
 import axios from "axios";
-import { getRefreshTokenFromStorage } from "../lib/token";
+import { getUserDataFromStorage } from "../lib/token";
 
 export const postReNewToken = async () => {
   return await axios.post(
     `https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_API_KEY}`,
     {
       grant_type: "refresh_token",
-      refresh_token: getRefreshTokenFromStorage(),
+      refresh_token: getUserDataFromStorage("refreshToken"),
     }
   );
 };

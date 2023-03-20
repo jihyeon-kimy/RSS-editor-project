@@ -47,6 +47,7 @@ const Login = () => {
         );
         dispatch(
           login({
+            email: loginRes.data.email,
             refreshToken: loginRes.data.refreshToken,
             expiresIn: expirationTime.toString(),
           })

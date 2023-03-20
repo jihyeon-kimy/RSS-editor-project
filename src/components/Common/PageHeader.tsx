@@ -6,7 +6,7 @@ interface PageHeaderProps {
   subTitle: string;
 }
 
-const PageHeader = ({ title, subTitle }: PageHeaderProps) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, subTitle }) => {
   return (
     <Title>
       <h3>{title}</h3>
@@ -23,6 +23,7 @@ const Title = styled.div`
 
   h3 {
     ${text.textStyle24()};
+    margin-bottom: 10px;
   }
 
   strong {

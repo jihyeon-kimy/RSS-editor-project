@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getSubscribeList } from "../../api/subscribe";
+import { FB_GetSubscribeList } from "../../api/subscribe";
 import { subscribeItem } from "../../types/subscribe";
 import Card from "../Common/Card";
 import AddSubscribeItem from "./AddSubscribeItem";
@@ -9,7 +9,7 @@ const Subscribe = () => {
   const [userSubscribeList, setUserSubscribeList] = useState<subscribeItem[]>([]);
 
   const getUserSubscirbeList = async () => {
-    const subscribeListRes = await getSubscribeList();
+    const subscribeListRes = await FB_GetSubscribeList();
     setUserSubscribeList(Object.values(subscribeListRes));
   };
 

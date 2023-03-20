@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getUserDataFromStorage } from "../lib/token";
 
-export const postReNewToken = async () => {
+export const FB_ReNewToken = async () => {
   return await axios.post(
     `https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_API_KEY}`,
     {

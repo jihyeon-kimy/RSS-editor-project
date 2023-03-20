@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { Link } from "react-router-dom";
-import { postSignup } from "../../api/auth";
-import { addNewUser } from "../../api/subscribe";
+import { FB_Signup } from "../../api/auth";
+import { FB_AddNewUser } from "../../api/user";
 import { useRouter } from "../../hooks/useRouter";
 import {
   HeaderMessage,
@@ -27,8 +27,8 @@ const Signup = () => {
 
   const submitHandler: SubmitHandler<formValues> = async (userData: formValues) => {
     try {
-      const signUpRes = await postSignup(userData);
-      await addNewUser(signUpRes.data.email);
+      const signUpRes = await FB_Signup(userData);
+      await FB_AddNewUser(signUpRes.data.email);
       if (signUpRes.status === 200) routeTo("/login");
     } catch (error) {
       // TODO: 에러 상황에 따른 안내 모달만들기

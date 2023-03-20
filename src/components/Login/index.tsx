@@ -1,10 +1,10 @@
 import { useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { postLogin } from "../../api/auth";
+import { FB_Login } from "../../api/auth";
 import { useAppDispatch } from "../../hooks/useRedux";
 import { useRouter } from "../../hooks/useRouter";
-import { validateToken } from "../../lib/token/validateToken";
+import { validateToken } from "../../hooks/validateToken";
 import { login } from "../../store/authSlice";
 import {
   HeaderMessage,
@@ -43,7 +43,7 @@ const Login = () => {
 
   const submitHandler = async (userData: formValues) => {
     try {
-      const loginRes = await postLogin(userData);
+      const loginRes = await FB_Login(userData);
       if (loginRes.status === 200) {
         const expirationTime = new Date(
           new Date().getTime() + +loginRes.data.expiresIn * 1000

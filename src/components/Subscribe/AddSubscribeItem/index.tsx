@@ -1,6 +1,5 @@
 import Card from "../../Common/Card";
 import { useForm } from "react-hook-form";
-import { addSubscribeItem } from "../../../api/subscribe";
 import { subscribeItem } from "../../../types/subscribe";
 import { MdAdd } from "react-icons/md";
 import {
@@ -10,6 +9,7 @@ import {
   SubscribeItemForm,
   UrlInputContainer,
 } from "./style";
+import { FB_AddSubscribeItem } from "../../../api/subscribe";
 
 interface AddSubscribeItemProps {
   subscribeList: subscribeItem[];
@@ -32,7 +32,7 @@ const AddSubscribeItem: React.FC<AddSubscribeItemProps> = ({
   } = useForm<formValues>();
 
   const onSubmit = async (subscribeItem: any, subscribeList: subscribeItem[]) => {
-    await addSubscribeItem(subscribeItem, subscribeList);
+    await FB_AddSubscribeItem(subscribeItem, subscribeList);
     await reloadUpdatedSubscirbeList();
   };
 

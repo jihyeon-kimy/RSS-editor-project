@@ -1,8 +1,8 @@
 import { subscribeItem } from "../../../types/subscribe";
 import { MdDone, MdDelete } from "react-icons/md";
 import {
-  changeActiveStatusOfSubscribeItem,
-  deleteSubscribeItem,
+  FB_ChangeActiveStatusOfSubscribeItem,
+  FB_DeleteSubscribeItem,
 } from "../../../api/subscribe";
 import { CheckCircle, Name, Remove, SubscribeItemContainer, Text, Link } from "./style";
 
@@ -19,26 +19,26 @@ const SubscribeItem: React.FC<subscribeItemProps> = ({
   subscribeList,
   reloadUpdatedSubscirbeList,
 }) => {
-  const ToggleActiveStatus = async () => {
-    await changeActiveStatusOfSubscribeItem(id, subscribeList);
+  const ToggleActiveStatusHandler = async () => {
+    await FB_ChangeActiveStatusOfSubscribeItem(id, subscribeList);
     await reloadUpdatedSubscirbeList();
   };
 
-  const RemoveSubscribeItem = async () => {
-    await deleteSubscribeItem(id, subscribeList);
+  const RemoveItemHandler = async () => {
+    await FB_DeleteSubscribeItem(id, subscribeList);
     await reloadUpdatedSubscirbeList();
   };
 
   return (
     <SubscribeItemContainer>
-      <CheckCircle enabled={enabled} onClick={ToggleActiveStatus}>
+      <CheckCircle enabled={enabled} onClick={ToggleActiveStatusHandler}>
         {enabled && <MdDone />}
       </CheckCircle>
       <Text enabled={enabled}>
         <Name>{name} </Name>
         <Link>{rssLink}</Link>
       </Text>
-      <Remove onClick={RemoveSubscribeItem}>
+      <Remove onClick={RemoveItemHandler}>
         <MdDelete />
       </Remove>
     </SubscribeItemContainer>

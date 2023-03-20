@@ -8,7 +8,7 @@ interface CardProps {
   className?: string;
 }
 
-const Card = ({ children, className }: CardProps) => {
+const Card: React.FC<CardProps> = ({ children, className }) => {
   return <CardContainer className={className}>{children}</CardContainer>;
 };
 

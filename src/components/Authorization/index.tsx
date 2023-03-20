@@ -1,14 +1,14 @@
 import { useEffect, useCallback } from "react";
 import { useAppDispatch } from "../../hooks/useRedux";
 import { useRouter } from "../../hooks/useRouter";
-import { validateToken } from "../../lib/token/validateToken";
+import { validateToken } from "../../hooks/validateToken";
 import { login, logout } from "../../store/authSlice";
 
 interface AuthorizationProps {
   children: React.ReactNode;
 }
 
-const Authorization = ({ children }: AuthorizationProps) => {
+const Authorization: React.FC<AuthorizationProps> = ({ children }) => {
   const { routeTo } = useRouter();
   const dispatch = useAppDispatch();
 

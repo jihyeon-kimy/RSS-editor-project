@@ -1,5 +1,4 @@
 import uuid from "react-uuid";
-import SUBSCRIBE_LIST from "../lib/constants/defaultSubscribeList";
 import { customDatabaseAxios } from "../lib/axios";
 import { getUserDataFromStorage } from "../lib/token";
 import { subscribeItem } from "../types/subscribe";
@@ -8,17 +7,7 @@ const getUserName = (email: string) => {
   return email?.split("@")[0];
 };
 
-// 회원가입 완료 시, 유저의 기본 정보 저장
-export const addNewUser = async (email: string) => {
-  const userName = getUserName(email);
-  return await customDatabaseAxios.put(`/${userName}.json`, {
-    user_id: email,
-    like: {},
-    subscribe_list: SUBSCRIBE_LIST,
-  });
-};
-
-export const getSubscribeList = async () => {
+export const FB_GetSubscribeList = async () => {
   const userName = getUserName(getUserDataFromStorage("email"));
   let userSubscribeList = await customDatabaseAxios.get(
     `/${userName}/subscribe_list.json`
@@ -26,7 +15,7 @@ export const getSubscribeList = async () => {
   return userSubscribeList.data;
 };
 
-export const addSubscribeItem = async (
+export const FB_AddSubscribeItem = async (
   subscribItem: subscribeItem,
   subscribeList: subscribeItem[]
 ) => {
@@ -41,7 +30,10 @@ export const addSubscribeItem = async (
   );
 };
 
-export const deleteSubscribeItem = async (id: string, subscribeList: subscribeItem[]) => {
+export const FB_DeleteSubscribeItem = async (
+  id: string,
+  subscribeList: subscribeItem[]
+) => {
   const userName = getUserName(getUserDataFromStorage("email"));
   const updatedSubscribeList = subscribeList?.filter((item) => item.id !== id);
   return await customDatabaseAxios.put(
@@ -50,7 +42,7 @@ export const deleteSubscribeItem = async (id: string, subscribeList: subscribeIt
   );
 };
 
-export const changeActiveStatusOfSubscribeItem = async (
+export const FB_ChangeActiveStatusOfSubscribeItem = async (
   id: string,
   subscribeList: subscribeItem[]
 ) => {

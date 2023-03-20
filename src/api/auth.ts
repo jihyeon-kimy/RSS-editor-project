@@ -5,7 +5,7 @@ interface formValues {
   password: string;
 }
 
-export const postSignup = async ({ email, password }: formValues) => {
+export const FB_Signup = async ({ email, password }: formValues) => {
   return await customAuthAxios.post(
     `/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`,
     {
@@ -16,7 +16,7 @@ export const postSignup = async ({ email, password }: formValues) => {
   );
 };
 
-export const postLogin = async ({ email, password }: formValues) => {
+export const FB_Login = async ({ email, password }: formValues) => {
   return await customAuthAxios.post(
     `/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`,
     {

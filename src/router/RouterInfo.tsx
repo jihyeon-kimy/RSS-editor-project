@@ -1,4 +1,5 @@
-import BookMarkPage from "../pages/BookMarkPage";
+import BookmarkDetailPage from "../pages/BookmarkDetailPage";
+import BookmarkPage from "../pages/BookmarkPage";
 import LoginPage from "../pages/LoginPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import PostListPage from "../pages/PostListPage";
@@ -34,13 +35,21 @@ const RouterInfo: RouterItem[] = [
   {
     id: 2,
     path: "/bookmark",
-    element: <BookMarkPage />,
+    element: <BookmarkPage />,
     withAuthorization: true,
     label: "북마크",
     IsOnNav: true,
   },
   {
     id: 3,
+    path: "/bookmark/:postId",
+    element: <BookmarkDetailPage />,
+    withAuthorization: true,
+    label: "북마크 Detail",
+    IsOnNav: false,
+  },
+  {
+    id: 4,
     path: "/subscribe",
     element: <SubcribePage />,
     withAuthorization: true,
@@ -48,7 +57,7 @@ const RouterInfo: RouterItem[] = [
     IsOnNav: true,
   },
   {
-    id: 4,
+    id: 5,
     path: "/login",
     element: <LoginPage />,
     withAuthorization: false,
@@ -56,7 +65,7 @@ const RouterInfo: RouterItem[] = [
     IsOnNav: true,
   },
   {
-    id: 5,
+    id: 6,
     path: "/signup",
     element: <SignupPage />,
     withAuthorization: false,

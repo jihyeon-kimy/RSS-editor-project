@@ -1,20 +1,32 @@
 import { useEffect } from "react";
-import PostItem from "./PostItem";
 import { asyncGetPosts, selectPosts, selectStatus } from "../../store/postSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import { FlexBox } from "./style";
+import { FB_AddBookmarkItem } from "../../api/bookmark";
+import PostItem from "../Common/PostItem";
+import { useRouter } from "../../hooks/useRouter";
+import { selectIsLoggedIn } from "../../store/authSlice";
 
 const CORSAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
 
 const PostList = () => {
   const dispatch = useAppDispatch();
-  const posts = useAppSelector(selectPosts);
+  const postList = useAppSelector(selectPosts);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const postLoadingStatus = useAppSelector(selectStatus);
+  const { routeTo } = useRouter();
 
   useEffect(() => {
     dispatch(asyncGetPosts());
   }, [dispatch]);
+
+  const addBookmarkHandler = (event: React.MouseEvent, id: string) => {
+    event.stopPropagation();
+    // Todo: '로그인 후 이용가능합니다.' 안내 모달로 수정
+    if (!isLoggedIn) return console.log("로그인 후 이용 가능합니다.");
+    FB_AddBookmarkItem(postList?.[+id]);
+  };
 
   if (postLoadingStatus === "Loading") {
     return (
@@ -24,7 +36,7 @@ const PostList = () => {
     );
   }
 
-  if (postLoadingStatus === "Fail" || posts?.length === 0) {
+  if (postLoadingStatus === "Fail" || postList?.length === 0) {
     return (
       <FlexBox>
         <h4>❌로딩에 실패했습니다❌</h4>
@@ -41,14 +53,18 @@ const PostList = () => {
 
   return (
     <ol>
-      {posts?.map((newPostItem, idx) => (
+      {postList?.map((item, idx) => (
         <PostItem
           key={idx}
-          id={idx}
-          title={newPostItem?.title}
-          content={newPostItem[`content:encodedSnippet`] || newPostItem?.contentSnippet}
-          author={newPostItem?.creator || newPostItem?.author}
-          date={newPostItem?.isoDate?.substr(0, 10)}
+          id={idx.toString()}
+          title={item?.title}
+          summary={item?.["content:encodedSnippet"] || item?.contentSnippet}
+          author={item?.creator || item?.author}
+          date={item?.isoDate?.substr(0, 10)}
+          onBookmark={addBookmarkHandler}
+          onClick={() => {
+            routeTo(`/post/${idx}`);
+          }}
         />
       ))}
     </ol>

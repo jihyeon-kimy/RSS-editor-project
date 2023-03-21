@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import RSSParser from "rss-parser";
 import { RootState } from ".";
-import SUBSCRIBE_LIST from "../components/PostList/subscribeList";
+import SUBSCRIBE_LIST from "../lib/constants/defaultSubscribeList";
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
@@ -11,7 +11,7 @@ export const asyncGetPosts = createAsyncThunk("postSlice/asyncGetPosts", async (
   let parsedPosts: any[] = [];
 
   for await (let subscribeItem of SUBSCRIBE_LIST) {
-    if (!subscribeItem.enabled) return;
+    if (!subscribeItem.enabled) continue;
     try {
       let parsedPost = await parser.parseURL(CORS_PROXY + subscribeItem.rssLink);
       parsedPosts = [...parsedPosts, ...parsedPost.items];

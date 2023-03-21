@@ -36,6 +36,12 @@ const GlobalStyle = createGlobalStyle`
     a {
     text-decoration: none
     }
+
+    button{
+      background-color: inherit;
+      border:none;
+      padding:0;
+    }
 `;
 
 export default GlobalStyle;

@@ -8,20 +8,20 @@ import SubscribeItem from "./SubscribeItem";
 const Subscribe = () => {
   const [userSubscribeList, setUserSubscribeList] = useState<subscribeItem[]>([]);
 
-  const getUserSubscirbeList = async () => {
+  const getUserSubscribeList = async () => {
     const subscribeListRes = await FB_GetSubscribeList();
     setUserSubscribeList(Object.values(subscribeListRes));
   };
 
   useEffect(() => {
-    getUserSubscirbeList();
+    getUserSubscribeList();
   }, []);
 
   return (
     <>
       <AddSubscribeItem
         subscribeList={userSubscribeList}
-        reloadUpdatedSubscirbeList={getUserSubscirbeList}
+        reloadUpdatedSubscirbeList={getUserSubscribeList}
       />
       <Card>
         <ol>
@@ -33,7 +33,7 @@ const Subscribe = () => {
               rssLink={item?.rssLink}
               enabled={item?.enabled}
               subscribeList={userSubscribeList}
-              reloadUpdatedSubscirbeList={getUserSubscirbeList}
+              reloadUpdatedSubscirbeList={getUserSubscribeList}
             />
           ))}
         </ol>

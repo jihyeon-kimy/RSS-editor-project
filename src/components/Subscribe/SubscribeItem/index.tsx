@@ -19,26 +19,26 @@ const SubscribeItem: React.FC<subscribeItemProps> = ({
   subscribeList,
   reloadUpdatedSubscirbeList,
 }) => {
-  const ToggleActiveStatusHandler = async () => {
+  const toggleActiveStatusHandler = async () => {
     await FB_ChangeActiveStatusOfSubscribeItem(id, subscribeList);
     await reloadUpdatedSubscirbeList();
   };
 
-  const RemoveItemHandler = async () => {
+  const deleteItemHandler = async () => {
     await FB_DeleteSubscribeItem(id, subscribeList);
     await reloadUpdatedSubscirbeList();
   };
 
   return (
     <SubscribeItemContainer>
-      <CheckCircle enabled={enabled} onClick={ToggleActiveStatusHandler}>
+      <CheckCircle enabled={enabled} onClick={toggleActiveStatusHandler}>
         {enabled && <MdDone />}
       </CheckCircle>
       <Text enabled={enabled}>
         <Name>{name} </Name>
         <Link>{rssLink}</Link>
       </Text>
-      <Remove onClick={RemoveItemHandler}>
+      <Remove onClick={deleteItemHandler}>
         <MdDelete />
       </Remove>
     </SubscribeItemContainer>

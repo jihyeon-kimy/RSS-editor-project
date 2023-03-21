@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import color from "../../styles/color";
-import { customMedia } from "../../styles/GlobalStyle";
-import text from "../../styles/text";
+import color from "../../../styles/color";
+import { customMedia } from "../../../styles/GlobalStyle";
+import text from "../../../styles/text";
 
 export const PostHeader = styled.div`
   position: relative;

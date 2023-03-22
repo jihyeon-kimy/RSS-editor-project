@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { FB_GetBookmarkItem } from "../../api/bookmark";
+import useBookmark from "../../hooks/useBookmark";
 import { bookmarkItem } from "../../types/bookmark";
 import ItemDetail from "../Common/ItemDetail";
 
 const BookmarkDetail = () => {
-  const { postId } = useParams();
   const [bookmarkPost, setBookmarkPost] = useState<bookmarkItem>();
+  const { getBookmarkPost } = useBookmark();
+  const { postId } = useParams();
 
-  const getBookmarkPost = async (postId: string) => {
-    const subscribeListRes = await FB_GetBookmarkItem(+postId);
-    setBookmarkPost(subscribeListRes);
-  };
+  const getBookmark = useCallback(async () => {
+    let post = await getBookmarkPost(postId!);
+    setBookmarkPost(post);
+  }, []);
 
   useEffect(() => {
-    getBookmarkPost(postId!);
-  }, []);
+    getBookmark();
+  }, [getBookmark]);
 
   return (
     <ItemDetail

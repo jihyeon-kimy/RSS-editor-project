@@ -1,36 +1,19 @@
-import { useState, useEffect } from "react";
-import { FB_DeleteBookmarkItem, FB_GetBookmarkList } from "../../api/bookmark";
+import useBookmark from "../../hooks/useBookmark";
 import { useRouter } from "../../hooks/useRouter";
-import { bookmarkItem } from "../../types/bookmark";
 import PostItem from "../Common/PostItem";
 
 const Bookmark = () => {
-  const [userBookmarkList, setuserBookmarkList] = useState<bookmarkItem[]>([]);
   const { routeTo } = useRouter();
+  const { bookmarkList, deleteBookmarkItem } = useBookmark();
 
-  const getUserBookmarkList = async () => {
-    const bookmarkListRes = await FB_GetBookmarkList();
-    setuserBookmarkList(bookmarkListRes);
-  };
-
-  const deleteBookmarkHandler = async (event: React.MouseEvent, id: string) => {
-    event.stopPropagation();
-    await FB_DeleteBookmarkItem(id, userBookmarkList);
-    await getUserBookmarkList();
-  };
-
-  useEffect(() => {
-    getUserBookmarkList();
-  }, []);
-
-  if (!userBookmarkList) {
+  if (!bookmarkList) {
     return <span>비어있습니다.</span>;
   }
 
   return (
     <>
       <ol>
-        {userBookmarkList?.map((item, idx) => (
+        {bookmarkList?.map((item, idx) => (
           <PostItem
             key={idx}
             id={item?.id}
@@ -38,7 +21,7 @@ const Bookmark = () => {
             summary={item?.summary}
             author={item?.author}
             date={item?.date?.substr(0, 10)}
-            onDelete={deleteBookmarkHandler}
+            onDelete={deleteBookmarkItem}
             onClick={() => {
               routeTo(`/bookmark/${idx}`);
             }}

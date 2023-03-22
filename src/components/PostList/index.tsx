@@ -3,10 +3,10 @@ import { asyncGetPosts, selectPosts, selectStatus } from "../../store/postSlice"
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import { FlexBox } from "./style";
-import { FB_AddBookmarkItem } from "../../api/bookmark";
 import PostItem from "../Common/PostItem";
 import { useRouter } from "../../hooks/useRouter";
 import { selectIsLoggedIn } from "../../store/authSlice";
+import useBookmark from "../../hooks/useBookmark";
 
 const CORSAnywhereUrl = "https://cors-anywhere.herokuapp.com/";
 
@@ -16,6 +16,7 @@ const PostList = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const postLoadingStatus = useAppSelector(selectStatus);
   const { routeTo } = useRouter();
+  const { addBookmarkPost } = useBookmark();
 
   useEffect(() => {
     dispatch(asyncGetPosts());
@@ -25,7 +26,7 @@ const PostList = () => {
     event.stopPropagation();
     // Todo: '로그인 후 이용가능합니다.' 안내 모달로 수정
     if (!isLoggedIn) return console.log("로그인 후 이용 가능합니다.");
-    FB_AddBookmarkItem(postList?.[+id]);
+    addBookmarkPost(postList?.[+id]);
   };
 
   if (postLoadingStatus === "Loading") {

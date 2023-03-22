@@ -1,6 +1,6 @@
+import React from "react";
 import Card from "../../Common/Card";
 import { useForm } from "react-hook-form";
-import { subscribeItem } from "../../../types/subscribe";
 import { MdAdd } from "react-icons/md";
 import {
   ErrorMessage,
@@ -9,36 +9,30 @@ import {
   SubscribeItemForm,
   UrlInputContainer,
 } from "./style";
-import { FB_AddSubscribeItem } from "../../../api/subscribe";
-
-interface AddSubscribeItemProps {
-  subscribeList: subscribeItem[];
-  reloadUpdatedSubscirbeList: () => Promise<void>;
-}
 
 interface formValues {
   name: string;
   rssLink: string;
 }
 
-const AddSubscribeItem: React.FC<AddSubscribeItemProps> = ({
-  subscribeList,
-  reloadUpdatedSubscirbeList,
-}) => {
+interface AddSubscribeItemProps {
+  onAddItem: (subscribItem: { name: string; rssLink: string }) => Promise<void>;
+}
+
+const AddSubscribeItem: React.FC<AddSubscribeItemProps> = ({ onAddItem }) => {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<formValues>();
 
-  const onSubmit = async (subscribeItem: any, subscribeList: subscribeItem[]) => {
-    await FB_AddSubscribeItem(subscribeItem, subscribeList);
-    await reloadUpdatedSubscirbeList();
+  const submitHandler = async (data: formValues) => {
+    await onAddItem(data);
   };
 
   return (
     <Card>
-      <SubscribeItemForm onSubmit={handleSubmit((item) => onSubmit(item, subscribeList))}>
+      <SubscribeItemForm onSubmit={handleSubmit(submitHandler)}>
         <NameInputContainer>
           <input
             className={errors.name && "error"}

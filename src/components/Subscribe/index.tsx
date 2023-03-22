@@ -1,39 +1,27 @@
-import { useEffect, useState } from "react";
-import { FB_GetSubscribeList } from "../../api/subscribe";
-import { subscribeItem } from "../../types/subscribe";
+import useSubscribe from "../../hooks/useSubscribe";
 import Card from "../Common/Card";
 import AddSubscribeItem from "./AddSubscribeItem";
 import SubscribeItem from "./SubscribeItem";
 
 const Subscribe = () => {
-  const [userSubscribeList, setUserSubscribeList] = useState<subscribeItem[]>([]);
-
-  const getUserSubscribeList = async () => {
-    const subscribeListRes = await FB_GetSubscribeList();
-    setUserSubscribeList(Object.values(subscribeListRes));
-  };
-
-  useEffect(() => {
-    getUserSubscribeList();
-  }, []);
+  const { subscribeList, addSubscribeItem, deleteSubscribeItem, toggleActiveStatus } =
+    useSubscribe();
 
   return (
     <>
-      <AddSubscribeItem
-        subscribeList={userSubscribeList}
-        reloadUpdatedSubscirbeList={getUserSubscribeList}
-      />
+      <AddSubscribeItem onAddItem={addSubscribeItem} />
       <Card>
         <ol>
-          {userSubscribeList?.map((item) => (
+          {subscribeList?.map((item, idx) => (
             <SubscribeItem
               key={item?.id}
               id={item?.id}
+              idx={idx}
               name={item?.name}
               rssLink={item?.rssLink}
               enabled={item?.enabled}
-              subscribeList={userSubscribeList}
-              reloadUpdatedSubscirbeList={getUserSubscribeList}
+              onDeleteItem={deleteSubscribeItem}
+              onToggleItem={toggleActiveStatus}
             />
           ))}
         </ol>

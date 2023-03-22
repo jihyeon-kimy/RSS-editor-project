@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const Auth_URL = "https://identitytoolkit.googleapis.com/v1";
-const Database_URL =
-  "https://rss-reader-816c7-default-rtdb.asia-southeast1.firebasedatabase.app/users";
+const Database_URL = `https://${process.env.REACT_APP_PROJECT_ID}.firebasedatabase.app/users`;
 
 export const customAuthAxios = axios.create({
   baseURL: Auth_URL,

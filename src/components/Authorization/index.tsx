@@ -1,29 +1,16 @@
-import { useEffect, useCallback } from "react";
-import { useAppDispatch } from "../../hooks/useRedux";
-import { useRouter } from "../../hooks/useRouter";
-import { validateToken } from "../../hooks/validateToken";
-import { login, logout } from "../../store/authSlice";
+import { useEffect } from "react";
+import useVerifyToken from "../../hooks/useVerifyToken";
 
 interface AuthorizationProps {
   children: React.ReactNode;
 }
 
 const Authorization: React.FC<AuthorizationProps> = ({ children }) => {
-  const { routeTo } = useRouter();
-  const dispatch = useAppDispatch();
-
-  const verifyStorageToken = useCallback(async () => {
-    const verifyRes = await validateToken();
-    if (!verifyRes) {
-      dispatch(logout());
-      routeTo("/login");
-    }
-    dispatch(login(verifyRes));
-  }, [dispatch, routeTo]);
+  const { checkTokenValidation } = useVerifyToken();
 
   useEffect(() => {
-    verifyStorageToken();
-  }, [children]);
+    checkTokenValidation();
+  }, [checkTokenValidation, children]);
 
   return <>{children}</>;
 };

@@ -17,7 +17,8 @@ export const routers = createBrowserRouter(
         element: router.element,
       };
     }
-  })
+  }),
+  { basename: "/RSS-editor-project" }
 );
 
 interface NavElement {

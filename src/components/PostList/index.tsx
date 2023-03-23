@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { asyncGetPosts, selectPosts, selectStatus } from "../../store/postSlice";
+import { getPostsReducer, selectPosts, selectStatus } from "../../store/postSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import LoadingSpinner from "../Common/LoadingSpinner";
 import PostItem from "../Common/PostItem";
@@ -7,6 +7,7 @@ import { useRouter } from "../../hooks/useRouter";
 import { selectIsLoggedIn } from "../../store/authSlice";
 import useBookmark from "../../hooks/useBookmark";
 import CorsError from "./CorsError";
+import { useSnackbar } from "notistack";
 
 const PostList = () => {
   const dispatch = useAppDispatch();
@@ -15,15 +16,21 @@ const PostList = () => {
   const postLoadingStatus = useAppSelector(selectStatus);
   const { routeTo } = useRouter();
   const { addBookmarkPost } = useBookmark();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    dispatch(asyncGetPosts());
+    dispatch(getPostsReducer());
   }, [dispatch]);
 
   const addBookmarkHandler = (event: React.MouseEvent, id: string) => {
     event.stopPropagation();
-    // Todo: '로그인 후 이용가능합니다.' 안내 모달로 수정
-    if (!isLoggedIn) return console.log("로그인 후 이용 가능합니다.");
+    if (!isLoggedIn) {
+      enqueueSnackbar("로그인 후 이용 가능합니다.", {
+        autoHideDuration: 2000,
+        variant: "info",
+      });
+      return;
+    }
     addBookmarkPost(postList?.[+id]);
   };
 

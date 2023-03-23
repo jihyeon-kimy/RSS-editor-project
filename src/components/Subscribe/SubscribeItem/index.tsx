@@ -3,14 +3,12 @@ import { MdDone, MdDelete } from "react-icons/md";
 import { CheckCircle, Name, Remove, SubscribeItemContainer, Text, Link } from "./style";
 
 interface SubscribeItemProps extends subscribeItem {
-  idx: number;
   onDeleteItem: (id: string) => Promise<void>;
   onToggleItem: (id: string) => Promise<void>;
 }
 
 const SubscribeItem: React.FC<SubscribeItemProps> = ({
   id,
-  idx,
   name,
   rssLink,
   enabled,

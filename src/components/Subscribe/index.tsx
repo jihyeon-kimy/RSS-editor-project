@@ -16,7 +16,6 @@ const Subscribe = () => {
             <SubscribeItem
               key={item?.id}
               id={item?.id}
-              idx={idx}
               name={item?.name}
               rssLink={item?.rssLink}
               enabled={item?.enabled}

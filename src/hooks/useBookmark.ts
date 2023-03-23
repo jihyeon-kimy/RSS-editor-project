@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import uuid from "react-uuid";
 import { FB_GetBookmarkList, FB_UpdateSubscribeList } from "../api/bookmark";
@@ -5,16 +6,12 @@ import { bookmarkItem } from "../types/bookmark";
 
 const useBookmark = () => {
   const [bookmarkList, setBookmarkList] = useState<bookmarkItem[]>([]);
+  const { enqueueSnackbar } = useSnackbar();
 
   const getBookmarkList = useCallback(async () => {
     const bookmarkListRes = await FB_GetBookmarkList();
-    console.log("커스텀훅 안 ", bookmarkList);
     setBookmarkList(bookmarkListRes);
   }, []);
-
-  const getBookmarkPost = async (postId: string) => {
-    return bookmarkList[+postId];
-  };
 
   const addBookmarkPost = async (post: any) => {
     const filteredPost = {
@@ -34,13 +31,17 @@ const useBookmark = () => {
       const checkSamePost = bookmarkList.filter(
         (item: any) => item.link === filteredPost.link
       );
-      if (checkSamePost.length !== 0) {
-        console.log("동일한 피드가 북마크에 존재합니다.");
+      if (checkSamePost.length) {
+        enqueueSnackbar("동일한 피드가 북마크에 존재합니다.", {
+          autoHideDuration: 2000,
+          variant: "info",
+        });
         return;
       }
       updatedBookmarkList = [...bookmarkList, filteredPost];
     }
     await FB_UpdateSubscribeList(updatedBookmarkList);
+    await getBookmarkList();
   };
 
   const deleteBookmarkItem = async (event: React.MouseEvent, id: string) => {
@@ -55,7 +56,7 @@ const useBookmark = () => {
     getBookmarkList();
   }, [getBookmarkList]);
 
-  return { bookmarkList, getBookmarkPost, addBookmarkPost, deleteBookmarkItem };
+  return { bookmarkList, addBookmarkPost, deleteBookmarkItem };
 };
 
 export default useBookmark;

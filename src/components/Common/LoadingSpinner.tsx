@@ -9,6 +9,9 @@ export default LoadingSpinner;
 
 const Spinner = styled.div`
   display: inline-block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
 
   &:after {
     content: " ";

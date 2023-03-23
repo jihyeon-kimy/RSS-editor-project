@@ -22,7 +22,7 @@ export const Button = styled.button`
 
   &:hover {
     svg {
-      color: ${color.green};
+      color: ${color.red};
     }
   }
 `;

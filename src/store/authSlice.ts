@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from ".";
-import { saveUserDataToStorage, removeUserDataFromStorage } from "../lib/token";
 
 export const authSlice = createSlice({
   name: "authSlice",
@@ -8,18 +7,18 @@ export const authSlice = createSlice({
     isLoggedIn: false,
   },
   reducers: {
-    logout: (state) => {
+    // 로그인 실패 시
+    logoutReducer: (state) => {
       state.isLoggedIn = false;
-      removeUserDataFromStorage();
     },
-    login: (state, action) => {
+    // 로그인 성공시
+    loginReducer: (state) => {
       state.isLoggedIn = true;
-      saveUserDataToStorage(action.payload);
     },
   },
 });
 
 export default authSlice.reducer;
 
-export const { login, logout } = authSlice.actions;
+export const { loginReducer, logoutReducer } = authSlice.actions;
 export const selectIsLoggedIn = (state: RootState) => state.auth.isLoggedIn;

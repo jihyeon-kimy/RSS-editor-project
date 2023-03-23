@@ -1,12 +1,6 @@
+import { userData, userDatas } from "../../types/userData";
+
 const RSS_USER_DATA = "RSS_USER_DATA" as const;
-
-interface userDatas {
-  email: string;
-  refreshToken: string;
-  expiresIn: string;
-}
-
-type userData = "email" | "refreshToken" | "expiresIn" | "all";
 
 export const saveUserDataToStorage = (userDatas: userDatas) => {
   localStorage.setItem(RSS_USER_DATA, JSON.stringify(userDatas));

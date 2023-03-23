@@ -1,11 +1,12 @@
+import { useSnackbar } from "notistack";
 import { useEffect, useCallback } from "react";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FB_Login } from "../../api/auth";
-import { useAppDispatch } from "../../hooks/useRedux";
+import useAuth from "../../hooks/useAuth";
 import { useRouter } from "../../hooks/useRouter";
-import { validateToken } from "../../hooks/validateToken";
-import { login } from "../../store/authSlice";
+import { validateToken } from "../../hooks/useVerifyToken";
+import { authFormValue } from "../../types/userData";
 import {
   HeaderMessage,
   LoginButton,
@@ -14,52 +15,51 @@ import {
   LoginHeader,
 } from "./style";
 
-interface formValues {
-  email: string;
-  password: string;
-}
-
 const Login = () => {
   const { routeTo } = useRouter();
-  const dispatch = useAppDispatch();
+  const { login } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<formValues>();
+  } = useForm<authFormValue>();
 
   const verifyTokenFromStorage = useCallback(async () => {
     const verifyRes = await validateToken();
     if (!!verifyRes) {
-      // TODO: 자동 로그인이 되었다는 알림 표시
-      dispatch(login(verifyRes));
-      routeTo("/");
+      enqueueSnackbar("자동 로그인되었습니다.", {
+        autoHideDuration: 2000,
+        variant: "success",
+      });
+      login(verifyRes);
     }
-  }, [dispatch, routeTo]);
+  }, [enqueueSnackbar, login]);
 
   useEffect(() => {
     verifyTokenFromStorage();
   }, []);
 
-  const submitHandler = async (userData: formValues) => {
+  const submitHandler: SubmitHandler<authFormValue> = async (userData) => {
     try {
       const loginRes = await FB_Login(userData);
       if (loginRes.status === 200) {
         const expirationTime = new Date(
           new Date().getTime() + +loginRes.data.expiresIn * 1000
         );
-        dispatch(
-          login({
-            email: loginRes.data.email.replace(".", ""),
-            refreshToken: loginRes.data.refreshToken,
-            expiresIn: expirationTime.toString(),
-          })
-        );
-        routeTo("/");
+        const handleduserData = {
+          email: loginRes.data.email.replace(".", ""),
+          refreshToken: loginRes.data.refreshToken,
+          expiresIn: expirationTime.toString(),
+        };
+        login(handleduserData);
       }
     } catch (error) {
-      alert(`에러발생 ${error}`);
-      console.log("에러발생", error);
+      enqueueSnackbar(`로그인 오류가 발생했습니다: ${error}`, {
+        autoHideDuration: 2000,
+        variant: "error",
+      });
+      console.log("로그인 에러발생", error);
     }
   };
 

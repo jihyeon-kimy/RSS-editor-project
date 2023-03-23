@@ -1,9 +1,11 @@
+import { useSnackbar } from "notistack";
 import { useForm } from "react-hook-form";
 import { SubmitHandler } from "react-hook-form/dist/types";
 import { Link } from "react-router-dom";
 import { FB_Signup } from "../../api/auth";
 import { FB_AddNewUser } from "../../api/user";
 import { useRouter } from "../../hooks/useRouter";
+import { authFormValue } from "../../types/userData";
 import {
   HeaderMessage,
   SignupButton,
@@ -12,43 +14,34 @@ import {
   SignupHeader,
 } from "./style";
 
-interface formValues {
-  email: string;
-  password: string;
-}
-
 const Signup = () => {
   const { routeTo } = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<formValues>();
+  } = useForm<authFormValue>();
 
-  const submitHandler: SubmitHandler<formValues> = async (userData: formValues) => {
+  const submitHandler: SubmitHandler<authFormValue> = async (userData) => {
     try {
       const signUpRes = await FB_Signup(userData);
-      await FB_AddNewUser(signUpRes.data.email);
-      if (signUpRes.status === 200) routeTo("/login");
+      if (signUpRes.status === 200) {
+        await FB_AddNewUser(signUpRes.data.email);
+        enqueueSnackbar("회원가입이 완료되었습니다.", {
+          autoHideDuration: 2000,
+          variant: "success",
+        });
+        routeTo("/login");
+      }
     } catch (error) {
-      // TODO: 에러 상황에 따른 안내 모달만들기
-      alert(`에러발생 ${error}`);
+      enqueueSnackbar(`회원가입 오류가 발생했습니다: ${error}`, {
+        autoHideDuration: 2000,
+        variant: "error",
+      });
       console.log("에러발생", error);
     }
   };
-
-  // NOTE: axios 에러와 그 외의 에러를 아래처럼 나눠서 쓰는 코드를 구글링하다가 발견
-  // axios.isAxiosError 좋은 듯! 추후 적용
-  // try {
-  //   const { data } = await axios.get('/user?ID=12345');
-  //   user = data.userDetails;
-  // } catch (error) {
-  //   if (axios.isAxiosError(error)) {
-  //     handleAxiosError(error);
-  //   } else {
-  //     handleUnexpectedError(error);
-  //   }
-  // }
 
   return (
     <SignupContainer>

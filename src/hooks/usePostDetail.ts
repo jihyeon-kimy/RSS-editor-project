@@ -1,4 +1,4 @@
-import { asyncGetPosts, selectPosts } from "../store/postSlice";
+import { getPostsReducer, selectPosts } from "../store/postSlice";
 import { useAppDispatch, useAppSelector } from "./useRedux";
 
 export const usePostDetail = (id: number) => {
@@ -6,7 +6,7 @@ export const usePostDetail = (id: number) => {
   const posts = useAppSelector(selectPosts);
 
   if (posts?.length === 0) {
-    dispatch(asyncGetPosts());
+    dispatch(getPostsReducer());
   }
   const post = posts && posts[id];
 

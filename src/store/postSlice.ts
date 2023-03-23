@@ -6,7 +6,7 @@ import SUBSCRIBE_LIST from "../lib/constants/defaultSubscribeList";
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
-export const asyncGetPosts = createAsyncThunk("postSlice/asyncGetPosts", async () => {
+export const getPostsReducer = createAsyncThunk("postSlice/asyncGetPosts", async () => {
   const parser = new RSSParser();
   let parsedPosts: any[] = [];
 
@@ -39,14 +39,14 @@ export const postSlice = createSlice({
   name: "postSlice",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(asyncGetPosts.pending, (state) => {
+    builder.addCase(getPostsReducer.pending, (state) => {
       state.status = "Loading";
     });
-    builder.addCase(asyncGetPosts.fulfilled, (state, action) => {
+    builder.addCase(getPostsReducer.fulfilled, (state, action) => {
       state.value = action.payload;
       state.status = "Complete";
     });
-    builder.addCase(asyncGetPosts.rejected, (state) => {
+    builder.addCase(getPostsReducer.rejected, (state) => {
       state.status = "Fail";
     });
   },

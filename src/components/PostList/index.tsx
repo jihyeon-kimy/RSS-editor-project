@@ -1,26 +1,27 @@
 import { useEffect } from "react";
-import { getPostsReducer, selectPosts, selectStatus } from "../../store/postSlice";
+import { getPostsReducer, selectLastUpdated, selectPosts } from "../../store/postSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
-import LoadingSpinner from "../Common/LoadingSpinner";
-import PostItem from "../Common/PostItem";
-import { useRouter } from "../../hooks/useRouter";
 import { selectIsLoggedIn } from "../../store/authSlice";
 import useBookmark from "../../hooks/useBookmark";
-import CorsError from "./CorsError";
 import { useSnackbar } from "notistack";
+import List from "./PostsList";
+import PageHeader from "../Common/PageHeader";
+import Card from "../Common/Card";
+import { LastUpdated } from "./style";
 
 const PostList = () => {
   const dispatch = useAppDispatch();
   const postList = useAppSelector(selectPosts);
+  const lastUpdated = useAppSelector(selectLastUpdated);
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const postLoadingStatus = useAppSelector(selectStatus);
-  const { routeTo } = useRouter();
   const { addBookmarkPost } = useBookmark();
   const { enqueueSnackbar } = useSnackbar();
+  const calculateupdateDuration = new Date().getTime() - new Date(lastUpdated).getTime();
 
   useEffect(() => {
+    if (calculateupdateDuration <= 180000) return;
     dispatch(getPostsReducer());
-  }, [dispatch]);
+  }, [calculateupdateDuration, dispatch]);
 
   const addBookmarkHandler = (event: React.MouseEvent, id: string) => {
     event.stopPropagation();
@@ -34,31 +35,14 @@ const PostList = () => {
     addBookmarkPost(postList?.[+id]);
   };
 
-  if (postLoadingStatus === "Loading") {
-    return <LoadingSpinner />;
-  }
-
-  if (postLoadingStatus === "Fail" || postList?.length === 0) {
-    return <CorsError />;
-  }
-
   return (
-    <ol>
-      {postList?.map((item, idx) => (
-        <PostItem
-          key={idx}
-          id={idx.toString()}
-          title={item?.title}
-          summary={item?.["content:encodedSnippet"] || item?.contentSnippet}
-          author={item?.creator || item?.author}
-          date={item?.isoDate?.substr(0, 10)}
-          onBookmark={addBookmarkHandler}
-          onClick={() => {
-            routeTo(`/post/${idx}`);
-          }}
-        />
-      ))}
-    </ol>
+    <>
+      <PageHeader title="피드 리스트" subTitle="편하게 모아보는 꿀같은 피드" />
+      <LastUpdated>LastUpdated: {new Date(lastUpdated).toLocaleString()}</LastUpdated>
+      <Card>
+        <List onBookmark={addBookmarkHandler} />
+      </Card>
+    </>
   );
 };
 

@@ -8,6 +8,7 @@ const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
 export const getPostsReducer = createAsyncThunk("postSlice/asyncGetPosts", async () => {
   const parser = new RSSParser();
+  const currentTime = new Date().toString();
   let parsedPosts: any[] = [];
 
   for await (let subscribeItem of SUBSCRIBE_LIST) {
@@ -22,17 +23,19 @@ export const getPostsReducer = createAsyncThunk("postSlice/asyncGetPosts", async
     }
   }
 
-  return parsedPosts;
+  return { parsedPosts, lastUpdated: currentTime };
 });
 
 interface postState {
   value: any[] | undefined;
   status: "Loading" | "Complete" | "Fail";
+  lastUpdated: string;
 }
 
 const initialState: postState = {
   value: [],
   status: "Loading",
+  lastUpdated: "",
 };
 
 export const postSlice = createSlice({
@@ -43,7 +46,8 @@ export const postSlice = createSlice({
       state.status = "Loading";
     });
     builder.addCase(getPostsReducer.fulfilled, (state, action) => {
-      state.value = action.payload;
+      state.value = action.payload.parsedPosts;
+      state.lastUpdated = action.payload.lastUpdated;
       state.status = "Complete";
     });
     builder.addCase(getPostsReducer.rejected, (state) => {
@@ -55,5 +59,6 @@ export const postSlice = createSlice({
 
 export const selectPosts = (state: RootState) => state.post.value;
 export const selectStatus = (state: RootState) => state.post.status;
+export const selectLastUpdated = (state: RootState) => state.post.lastUpdated;
 
 export default postSlice.reducer;

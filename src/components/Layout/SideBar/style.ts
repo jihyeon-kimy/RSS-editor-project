@@ -15,6 +15,10 @@ export const SideBarContainer = styled.nav`
   transition: all 300ms ease-in-out;
   z-index: ${zIndex.sideBarLevel};
 
+  .scroll {
+    overflow: hidden;
+  }
+
   .closeButton {
     display: block;
     font-size: 25px;
@@ -33,12 +37,31 @@ export const SideBarItem = styled.li`
   display: block;
   padding-bottom: 10px;
 
-  a {
+  * {
     ${text.textStyle18()};
     font-weight: 600;
+  }
 
+  a {
     &.isActive {
       color: ${color.blueDark};
+    }
+  }
+
+  button {
+    display: block;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    height: 50px;
+    width: 90%;
+    background-color: ${color.border};
+    cursor: pointer;
+    transform: translateX(-50%);
+    transition: background-color 200ms ease-in-out;
+
+    :hover {
+      background-color: ${color.tertiary};
     }
   }
 `;

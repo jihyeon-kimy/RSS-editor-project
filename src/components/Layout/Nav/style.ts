@@ -13,12 +13,26 @@ export const NavItem = styled.li`
   display: inline-block;
   margin-right: 20px;
 
-  a {
+  * {
     ${text.textStyle18()};
     font-weight: 600;
+  }
 
-    &.isActive {
-      color: ${color.blueDark};
+  a.isActive {
+    color: ${color.blueDark};
+  }
+
+  button {
+    margin-left: 10px;
+    padding: 5px 15px;
+    border: 1px solid ${color.tertiary};
+    border-radius: 10px;
+    background-color: ${color.border};
+    cursor: pointer;
+    transition: background-color 200ms ease-in-out;
+
+    :hover {
+      background-color: ${color.tertiary};
     }
   }
 

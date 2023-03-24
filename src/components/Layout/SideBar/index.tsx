@@ -2,6 +2,9 @@ import { NavLink } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { SideBarContainer, SideBarItem, SideBarList } from "./style";
 import { NavContent } from "../../../router";
+import { useAppSelector } from "../../../hooks/useRedux";
+import { selectIsLoggedIn } from "../../../store/authSlice";
+import useAuth from "../../../hooks/useAuth";
 
 interface SideBarProps {
   onClose: () => void;
@@ -9,6 +12,8 @@ interface SideBarProps {
 }
 
 const SideBar: React.FC<SideBarProps> = ({ onClose, visibleSideBar }) => {
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const { logout } = useAuth();
   return (
     <SideBarContainer className={visibleSideBar ? "isOpen" : ""}>
       <h2 className="visually-hidden">메뉴</h2>
@@ -23,6 +28,13 @@ const SideBar: React.FC<SideBarProps> = ({ onClose, visibleSideBar }) => {
             </NavLink>
           </SideBarItem>
         ))}
+        {isLoggedIn && (
+          <SideBarItem>
+            <button type="button" onClick={logout}>
+              로그아웃
+            </button>
+          </SideBarItem>
+        )}
       </SideBarList>
     </SideBarContainer>
   );

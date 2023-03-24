@@ -14,7 +14,7 @@ export const getPostsReducer = createAsyncThunk("postSlice/asyncGetPosts", async
   for await (let subscribeItem of SUBSCRIBE_LIST) {
     if (!subscribeItem.enabled) continue;
     try {
-      let parsedPost = await parser.parseURL(CORS_PROXY + subscribeItem.rssLink);
+      let parsedPost = await parser.parseURL(subscribeItem.rssLink);
       parsedPosts = [...parsedPosts, ...parsedPost.items];
     } catch {
       console.log(

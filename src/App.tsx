@@ -1,4 +1,5 @@
 import React from "react";
+import { SnackbarProvider } from "notistack";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { routers } from "./router";
@@ -10,7 +11,9 @@ function App() {
     <>
       <Provider store={store}>
         <GlobalStyle />
-        <RouterProvider router={routers} />
+        <SnackbarProvider maxSnack={3}>
+          <RouterProvider router={routers} />
+        </SnackbarProvider>
       </Provider>
     </>
   );

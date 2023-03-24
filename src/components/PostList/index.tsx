@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/useRedux";
 import { selectIsLoggedIn } from "../../store/authSlice";
 import useBookmark from "../../hooks/useBookmark";
 import { useSnackbar } from "notistack";
-import List from "./PostsList";
+import List from "./List";
 import PageHeader from "../Common/PageHeader";
 import Card from "../Common/Card";
 import { LastUpdated } from "./style";

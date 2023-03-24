@@ -12,7 +12,7 @@ export interface RouterItem {
   element: JSX.Element;
   withAuthorization: boolean;
   label: string;
-  IsOnNav: boolean;
+  IsOnNav?: "both" | "inLogin" | "inLogout";
 }
 
 const RouterInfo: RouterItem[] = [
@@ -22,7 +22,7 @@ const RouterInfo: RouterItem[] = [
     element: <PostListPage />,
     withAuthorization: false,
     label: "New 피드",
-    IsOnNav: true,
+    IsOnNav: "both",
   },
   {
     id: 1,
@@ -30,7 +30,6 @@ const RouterInfo: RouterItem[] = [
     element: <PostDetailPage />,
     withAuthorization: false,
     label: "Post Detail",
-    IsOnNav: false,
   },
   {
     id: 2,
@@ -38,7 +37,7 @@ const RouterInfo: RouterItem[] = [
     element: <BookmarkPage />,
     withAuthorization: true,
     label: "북마크",
-    IsOnNav: true,
+    IsOnNav: "inLogin",
   },
   {
     id: 3,
@@ -46,7 +45,6 @@ const RouterInfo: RouterItem[] = [
     element: <BookmarkDetailPage />,
     withAuthorization: true,
     label: "북마크 Detail",
-    IsOnNav: false,
   },
   {
     id: 4,
@@ -54,7 +52,7 @@ const RouterInfo: RouterItem[] = [
     element: <SubcribePage />,
     withAuthorization: true,
     label: "구독관리",
-    IsOnNav: true,
+    IsOnNav: "inLogin",
   },
   {
     id: 5,
@@ -62,7 +60,7 @@ const RouterInfo: RouterItem[] = [
     element: <LoginPage />,
     withAuthorization: false,
     label: "로그인/회원가입",
-    IsOnNav: true,
+    IsOnNav: "inLogout",
   },
   {
     id: 6,
@@ -70,7 +68,6 @@ const RouterInfo: RouterItem[] = [
     element: <SignupPage />,
     withAuthorization: false,
     label: "로그인/회원가입",
-    IsOnNav: false,
   },
 ];
 

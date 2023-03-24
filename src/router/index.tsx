@@ -27,15 +27,15 @@ interface NavElement {
   path: string;
 }
 
-const withAuthNavContent = RouterInfo.reduce((prev, router) => {
-  if (router.IsOnNav)
+const NavContentInLogin = RouterInfo.reduce((prev, router) => {
+  if (router.IsOnNav === "both" || router.IsOnNav === "inLogin")
     return [...prev, { id: router.id, path: router.path, label: router.label }];
 
   return prev;
 }, [] as NavElement[]);
 
-const withoutAuthNavContent = RouterInfo.reduce((prev, router) => {
-  if (!router.withAuthorization && router.IsOnNav)
+const NavContentInLogout = RouterInfo.reduce((prev, router) => {
+  if (router.IsOnNav === "both" || router.IsOnNav === "inLogout")
     return [...prev, { id: router.id, path: router.path, label: router.label }];
 
   return prev;
@@ -43,5 +43,5 @@ const withoutAuthNavContent = RouterInfo.reduce((prev, router) => {
 
 export const NavContent = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  return isLoggedIn ? withAuthNavContent : withoutAuthNavContent;
+  return isLoggedIn ? NavContentInLogin : NavContentInLogout;
 };

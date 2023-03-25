@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import FloatingQA from "../FloatingQA";
 import Header from "./Header";
 import SideBar from "./SideBar";
 
@@ -23,6 +24,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header onOpenSideBar={openSideBarHandler} />
       <SideBar onClose={closeSideBarHandler} visibleSideBar={visibleSideBar} />
       <Contents>{children}</Contents>
+      <FloatingQA />
     </>
   );
 };

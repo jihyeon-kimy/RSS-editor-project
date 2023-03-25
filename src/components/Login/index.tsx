@@ -1,11 +1,11 @@
 import { useSnackbar } from "notistack";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FB_Login } from "../../api/auth";
 import useAuth from "../../hooks/useAuth";
 import { useRouter } from "../../hooks/useRouter";
-import { validateToken } from "../../hooks/useVerifyToken";
+import useVerifyToken from "../../hooks/useVerifyToken";
 import { authFormValue } from "../../types/userData";
 import {
   HeaderMessage,
@@ -24,21 +24,11 @@ const Login = () => {
     handleSubmit,
     formState: { isSubmitting, errors },
   } = useForm<authFormValue>();
-
-  const verifyTokenFromStorage = useCallback(async () => {
-    const verifyRes = await validateToken();
-    if (!!verifyRes) {
-      enqueueSnackbar("자동 로그인되었습니다.", {
-        autoHideDuration: 2000,
-        variant: "success",
-      });
-      login(verifyRes);
-    }
-  }, [enqueueSnackbar, login]);
+  const { checkTokenValidation } = useVerifyToken();
 
   useEffect(() => {
-    verifyTokenFromStorage();
-  }, []);
+    checkTokenValidation();
+  }, [checkTokenValidation]);
 
   const submitHandler: SubmitHandler<authFormValue> = async (userData) => {
     try {

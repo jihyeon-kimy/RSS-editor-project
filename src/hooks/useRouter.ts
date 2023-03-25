@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useRouter = () => {
@@ -5,6 +6,6 @@ export const useRouter = () => {
 
   return {
     currentPath: window.location.pathname,
-    routeTo: (path: string) => router(path),
+    routeTo: useCallback((path: string) => router(path), [router]),
   };
 };

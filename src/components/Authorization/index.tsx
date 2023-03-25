@@ -1,16 +1,23 @@
 import { useEffect } from "react";
-import useVerifyToken from "../../hooks/useVerifyToken";
+import { useAppSelector } from "../../hooks/useRedux";
+import { useRouter } from "../../hooks/useRouter";
+import { selectIsLoggedIn } from "../../store/authSlice";
 
 interface AuthorizationProps {
   children: React.ReactNode;
 }
 
 const Authorization: React.FC<AuthorizationProps> = ({ children }) => {
-  const { checkTokenValidation } = useVerifyToken();
+  const { routeTo } = useRouter();
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   useEffect(() => {
-    checkTokenValidation();
-  }, [checkTokenValidation, children]);
+    if (!isLoggedIn) {
+      return routeTo("/login");
+    }
+  }, [isLoggedIn, routeTo]);
+
+  if (!isLoggedIn) return <></>;
 
   return <>{children}</>;
 };

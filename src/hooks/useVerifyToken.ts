@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { FB_ReNewToken } from "../api/token";
 import { getUserDataFromStorage } from "../lib/token";
-import useLogout from "./useAuth";
+import useAuth from "./useAuth";
 
 const calculateRemainingTime = (expirationTime: string) => {
   const currentTime = new Date().getTime();
@@ -40,14 +40,13 @@ export const validateToken = async () => {
 };
 
 const useVerifyToken = () => {
-  const { logout } = useLogout();
+  const { login } = useAuth();
 
   const checkTokenValidation = useCallback(async () => {
     const verifyRes = await validateToken();
-    if (!verifyRes) {
-      logout();
-    }
-  }, [logout]);
+
+    if (verifyRes) return login(verifyRes);
+  }, [login]);
   return { checkTokenValidation };
 };
 

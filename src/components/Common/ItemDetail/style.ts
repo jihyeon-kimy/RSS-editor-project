@@ -55,4 +55,10 @@ export const PostContent = styled.div`
     padding: 5px;
     border-radius: 5px;
   }
+
+  code {
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: inline-block;
+  }
 `;

@@ -11,6 +11,30 @@ export const customMedia = generateMedia({
 const GlobalStyle = createGlobalStyle`
     ${reset}
 
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 500;
+        font-style: normal;
+        src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot');
+        src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.eot?#iefix') format('embedded-opentype'),
+            url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff2') format('woff2'),
+            url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.woff') format('woff'),
+            url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Medium.ttf') format("truetype");
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: 'Pretendard';
+        font-weight: 700;
+        font-style: normal;
+        src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.eot');
+        src: url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.eot?#iefix') format('embedded-opentype'),
+            url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.woff2') format('woff2'),
+            url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.woff') format('woff'),
+            url('https://cdn.jsdelivr.net/gh/webfontworld/pretendard/Pretendard-Bold.ttf') format("truetype");
+        font-display: swap;
+    }
+
     .visually-hidden {
     position: absolute !important;
     width: 1px !important;
@@ -27,10 +51,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     background-color: ${color.background};
+    font-family: 'Pretendard',sans-serif;
     }
 
     * {
         box-sizing: border-box;
+        font-family: 'Pretendard',sans-serif; 
     }
 
     a {

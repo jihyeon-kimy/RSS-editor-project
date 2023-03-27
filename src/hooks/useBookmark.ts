@@ -42,6 +42,10 @@ const useBookmark = () => {
     }
     await FB_UpdateSubscribeList(updatedBookmarkList);
     await getBookmarkList();
+    enqueueSnackbar("북마크 되었습니다.", {
+      autoHideDuration: 2000,
+      variant: "success",
+    });
   };
 
   const deleteBookmarkItem = async (event: React.MouseEvent, id: string) => {
@@ -50,6 +54,10 @@ const useBookmark = () => {
 
     await FB_UpdateSubscribeList(updatedBookmarkList);
     await getBookmarkList();
+    enqueueSnackbar("북마크된 피드가 삭제되었습니다.", {
+      autoHideDuration: 2000,
+      variant: "error",
+    });
   };
 
   useEffect(() => {

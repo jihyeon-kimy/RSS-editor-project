@@ -7,7 +7,7 @@ interface formValues {
 
 export const FB_Signup = async ({ email, password }: formValues) => {
   return await customAuthAxios.post(
-    `/accounts:signUp?key=${process.env.REACT_APP_API_KEY}`,
+    `/accounts:signUp?key=${process.env.REACT_APP_FB_API_KEY}`,
     {
       email: email,
       password: password,
@@ -18,7 +18,7 @@ export const FB_Signup = async ({ email, password }: formValues) => {
 
 export const FB_Login = async ({ email, password }: formValues) => {
   return await customAuthAxios.post(
-    `/accounts:signInWithPassword?key=${process.env.REACT_APP_API_KEY}`,
+    `/accounts:signInWithPassword?key=${process.env.REACT_APP_FB_API_KEY}`,
     {
       email: email,
       password: password,

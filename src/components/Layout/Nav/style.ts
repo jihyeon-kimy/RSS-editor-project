@@ -12,28 +12,24 @@ export const NavContainer = styled.nav`
 export const NavItem = styled.li`
   display: inline-block;
   margin-right: 20px;
+  transition: transform 200ms ease-in-out, color 200ms ease-in-out;
 
   * {
     ${text.textStyle18()};
     font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      color: ${color.blueDark};
+    }
   }
 
   a.isActive {
     color: ${color.blueDark};
   }
 
-  button {
-    margin-left: 10px;
-    padding: 5px 15px;
-    border: 1px solid ${color.tertiary};
-    border-radius: 10px;
-    background-color: ${color.border};
-    cursor: pointer;
-    transition: background-color 200ms ease-in-out;
-
-    :hover {
-      background-color: ${color.tertiary};
-    }
+  &:hover {
+    transform: translateY(3px);
   }
 
   ${customMedia.lessThan("lg")`

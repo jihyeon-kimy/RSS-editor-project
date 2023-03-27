@@ -36,16 +36,19 @@ export const SideBarList = styled.ul`
 export const SideBarItem = styled.li`
   display: block;
   padding-bottom: 10px;
+  transition: transform 200ms ease-in-out, color 200ms ease-in-out;
 
   * {
     ${text.textStyle18()};
     font-weight: 600;
   }
 
-  a {
-    &.isActive {
-      color: ${color.blueDark};
-    }
+  a.isActive {
+    color: ${color.blueDark};
+  }
+
+  a:hover {
+    color: ${color.blueDark};
   }
 
   button {
@@ -58,10 +61,11 @@ export const SideBarItem = styled.li`
     background-color: ${color.border};
     cursor: pointer;
     transform: translateX(-50%);
-    transition: background-color 200ms ease-in-out;
+    transition: background-color 200ms ease-in-out, transform 200ms ease-in-out;
 
     :hover {
       background-color: ${color.tertiary};
+      transform: translate(-50%, 3px);
     }
   }
 `;

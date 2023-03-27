@@ -1,7 +1,7 @@
+import { MagnifyingGlass } from "react-loader-spinner";
 import { useAppSelector } from "../../../hooks/useRedux";
 import { useRouter } from "../../../hooks/useRouter";
 import { selectPosts, selectStatus } from "../../../store/postSlice";
-import LoadingSpinner from "../../Common/LoadingSpinner";
 import PostItem from "../../Common/PostItem";
 import CorsError from "../CorsError";
 
@@ -15,7 +15,18 @@ const List: React.FC<ListProps> = ({ onBookmark }) => {
   const postList = useAppSelector(selectPosts);
 
   if (postLoadingStatus === "Loading") {
-    return <LoadingSpinner />;
+    return (
+      <MagnifyingGlass
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="MagnifyingGlass-loading"
+        wrapperStyle={{ display: "block", margin: "20px auto" }}
+        wrapperClass="MagnifyingGlass-wrapper"
+        glassColor="#c0efff"
+        color="#e15b64"
+      />
+    );
   }
 
   if (postLoadingStatus === "Fail" || postList?.length === 0) {

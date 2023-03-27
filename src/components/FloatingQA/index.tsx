@@ -1,32 +1,32 @@
-import styled from "styled-components";
-import color from "../../styles/color";
-import text from "../../styles/text";
 import ChattingModal from "./ChattingModal";
+import { BsQuestionCircle } from "react-icons/bs";
+import useToggleComponent from "../../hooks/useToggleComponent";
+import { FloatingButton } from "./style";
+import ReactDOM from "react-dom";
 
 const FloatingQA = () => {
+  const {
+    visible: visibleChattingModal,
+    openComponent: openChattingModal,
+    closeComponent: closeChattingModal,
+  } = useToggleComponent();
+
+  const portalElement = document.getElementById("overlays");
   return (
     <>
-      <ChattingModal />
-      <FloatingButton onClick={() => alert("기능 구현중입니다.")}>
-        피드 내용 중 궁금한게 생겼다면💡
-      </FloatingButton>
+      {ReactDOM.createPortal(
+        <ChattingModal visible={visibleChattingModal} onClose={closeChattingModal} />,
+        portalElement!
+      )}
+      {ReactDOM.createPortal(
+        <FloatingButton onClick={openChattingModal} visible={!visibleChattingModal}>
+          <span>💡 피드 내용 중 궁금한게 생겼다면 💡</span>
+          <BsQuestionCircle />
+        </FloatingButton>,
+        portalElement!
+      )}
     </>
   );
 };
 
 export default FloatingQA;
-
-const FloatingButton = styled.button`
-  ${text.textStyle18(color.white)};
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  padding: 15px 90px;
-  background-color: ${color.primary};
-  border-radius: 20px;
-  opacity: 0.9;
-  color: ${color.white};
-  font-weight: 600;
-  cursor: pointer;
-  transform: translateX(-50%);
-`;

@@ -1,6 +1,7 @@
 import BookmarkDetailPage from "../pages/BookmarkDetailPage";
 import BookmarkPage from "../pages/BookmarkPage";
 import LoginPage from "../pages/LoginPage";
+import MainPage from "../pages/MainPage";
 import PostDetailPage from "../pages/PostDetailPage";
 import PostListPage from "../pages/PostListPage";
 import SignupPage from "../pages/SignupPage";
@@ -19,20 +20,27 @@ const RouterInfo: RouterItem[] = [
   {
     id: 0,
     path: "/",
+    element: <MainPage />,
+    withAuthorization: false,
+    label: "메인",
+  },
+  {
+    id: 1,
+    path: "/posts",
     element: <PostListPage />,
     withAuthorization: false,
     label: "New 피드",
     IsOnNav: "both",
   },
   {
-    id: 1,
+    id: 2,
     path: "/post/:postId",
     element: <PostDetailPage />,
     withAuthorization: false,
     label: "Post Detail",
   },
   {
-    id: 2,
+    id: 3,
     path: "/bookmark",
     element: <BookmarkPage />,
     withAuthorization: true,
@@ -40,14 +48,14 @@ const RouterInfo: RouterItem[] = [
     IsOnNav: "inLogin",
   },
   {
-    id: 3,
+    id: 4,
     path: "/bookmark/:postId",
     element: <BookmarkDetailPage />,
     withAuthorization: true,
     label: "북마크 Detail",
   },
   {
-    id: 4,
+    id: 5,
     path: "/subscribe",
     element: <SubcribePage />,
     withAuthorization: true,
@@ -55,7 +63,7 @@ const RouterInfo: RouterItem[] = [
     IsOnNav: "inLogin",
   },
   {
-    id: 5,
+    id: 6,
     path: "/login",
     element: <LoginPage />,
     withAuthorization: false,
@@ -63,7 +71,7 @@ const RouterInfo: RouterItem[] = [
     IsOnNav: "inLogout",
   },
   {
-    id: 6,
+    id: 7,
     path: "/signup",
     element: <SignupPage />,
     withAuthorization: false,

@@ -61,12 +61,12 @@ const Signup = () => {
         <input
           className={errors.email && "error"}
           type="email"
-          placeholder="test@email.com"
+          placeholder="이메일"
           {...register("email", {
             required: "이메일은 필수 입력입니다.",
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "이메일 형식에 맞지 않습니다.",
+              message: "이메일 형식에 맞지 않습니다(@도메인 포함).",
             },
           })}
         />
@@ -74,7 +74,7 @@ const Signup = () => {
         <input
           className={errors.password && "error"}
           type="password"
-          placeholder="****************"
+          placeholder="비밀번호"
           {...register("password", {
             required: "비밀번호는 필수 입력입니다.",
             minLength: {

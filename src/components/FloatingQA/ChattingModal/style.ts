@@ -2,6 +2,7 @@ import styled, { css, keyframes } from "styled-components";
 import color from "../../../styles/color";
 import { flexBox } from "../../../styles/postion";
 import text from "../../../styles/text";
+import zIndex from "../../../styles/z-index";
 
 export const ChattingModalContainer = styled.div<{ visible: boolean }>`
   display: none;
@@ -14,6 +15,7 @@ export const ChattingModalContainer = styled.div<{ visible: boolean }>`
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: display 200ms ease-in-out;
+  z-index: ${zIndex.overlayLevel};
 
   ${(props) =>
     props.visible &&

@@ -2,6 +2,18 @@ import styled, { css, keyframes } from "styled-components";
 import color from "../../styles/color";
 import { customMedia } from "../../styles/GlobalStyle";
 import text from "../../styles/text";
+import zIndex from "../../styles/z-index";
+
+export const Slide = keyframes`
+  from{
+    opacity: 0;
+    transform: translate(50%, 30px);
+  }
+  to{
+    opacity: 1;
+    transform: translate(50%, 0);
+  }
+  `;
 
 export const FloatingButton = styled.button<{ visible: boolean }>`
   display: none;
@@ -13,7 +25,9 @@ export const FloatingButton = styled.button<{ visible: boolean }>`
   border-radius: 20px;
   opacity: 0.9;
   cursor: pointer;
+  z-index: ${zIndex.overlayLevel};
   transform: translateX(50%);
+  translate: background-color 200ms ease-in-out;
 
   span {
     ${text.textStyle18(color.dark)};
@@ -49,17 +63,11 @@ export const FloatingButton = styled.button<{ visible: boolean }>`
     props.visible &&
     css`
       display: block;
-      animation: ${Slide} 0.6s ease-in-out;
+      animation: ${Slide} 600ms ease-in-out;
     `}
-`;
 
-export const Slide = keyframes`
-  from{
-    opacity: 0;
-    transform: translate(50%, 30px);
+    :hover {
+    background-color: ${color.blueLight};
+    border: 1px solid ${color.border};
   }
-  to{
-    opacity: 1;
-    transform: translate(50%, 0);
-  }
-  `;
+`;

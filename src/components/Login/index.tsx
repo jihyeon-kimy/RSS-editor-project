@@ -77,10 +77,11 @@ const Login = () => {
             required: "이메일은 필수 입력입니다.",
             pattern: {
               value: /\S+@\S+\.\S+/,
-              message: "이메일 형식에 맞지 않습니다.",
+              message: "이메일 형식에 맞지 않습니다(@도메인 포함).",
             },
           })}
         />
+
         {errors.email && <small role="alert">{errors.email.message}</small>}
         <input
           className={errors.password && "error"}
@@ -96,7 +97,16 @@ const Login = () => {
         />
         {errors.password && <small role="alert">{errors.password.message}</small>}
         <LoginButton>
-          <button disabled={isSubmitting}>로그인 하기</button>
+          <button type="submit" disabled={isSubmitting}>
+            로그인 하기
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              submitHandler({ email: "test@gmail.com", password: "qwerasdf" });
+            }}>
+            테스트 계정으로 로그인하기
+          </button>
         </LoginButton>
       </LoginForm>
     </LoginContainer>

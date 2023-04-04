@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 export const OPENAI_getResponse = async (input: string) => {
   const configuration = new Configuration({
-    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+    apiKey: `${process.env.REACT_APP_OPENAI_API_KEY}`,
   });
   const openai = new OpenAIApi(configuration);
 
@@ -16,6 +16,5 @@ export const OPENAI_getResponse = async (input: string) => {
     presence_penalty: 0,
   });
 
-  console.log(completion);
   return completion.data.choices[0].text;
 };

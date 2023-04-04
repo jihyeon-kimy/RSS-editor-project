@@ -69,22 +69,18 @@ export const LoginForm = styled.form`
 `;
 
 export const LoginButton = styled.div`
-  height: 50px;
   margin-top: 20px;
 
   button {
     ${text.textStyle16(color.white)}
+    display: block;
     width: 350px;
     height: 50px;
+    margin-bottom: 5px;
     background-color: ${color.blue};
     border-radius: 5px;
     border: none;
     font-weight: 600;
     cursor: pointer;
-    transition: margin 200ms ease-in-out;
-
-    :hover {
-      margin-top: 5px;
-    }
   }
 `;

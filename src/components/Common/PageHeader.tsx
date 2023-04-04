@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import text from "../../styles/text";
 
 interface PageHeaderProps {
@@ -17,9 +17,22 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, subTitle }) => {
 
 export default PageHeader;
 
+export const Slide = keyframes`
+  from{
+    opacity: 0;
+    transform: translateY(10%);
+  }
+  to{
+    opacity: 1;
+    transform: translateY(0);
+
+  }
+`;
+
 const Title = styled.div`
   padding: 50px 25px 30px;
   font-weight: 600;
+  animation: ${Slide} 600ms ease-in-out;
 
   h3 {
     ${text.textStyle24()};

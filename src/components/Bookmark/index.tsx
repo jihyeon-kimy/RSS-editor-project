@@ -1,6 +1,7 @@
 import useBookmark from "../../hooks/useBookmark";
 import { useRouter } from "../../hooks/useRouter";
-import PostItem from "../Common/PostItem";
+import BookmarkItem from "./BookmarkItem";
+import { BookmarkContainer } from "./style";
 
 const Bookmark = () => {
   const { routeTo } = useRouter();
@@ -12,9 +13,9 @@ const Bookmark = () => {
 
   return (
     <>
-      <ol>
+      <BookmarkContainer>
         {bookmarkList?.map((item, idx) => (
-          <PostItem
+          <BookmarkItem
             key={idx}
             id={item?.id}
             title={item?.title}
@@ -27,7 +28,7 @@ const Bookmark = () => {
             }}
           />
         ))}
-      </ol>
+      </BookmarkContainer>
     </>
   );
 };

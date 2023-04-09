@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ onOpenSideBar }) => {
       <div>
         <GiHamburgerMenu className="menuButton" onClick={onOpenSideBar} />
         <Link to="/">
-          <Title>RSS-Reader</Title>
+          <Title>📰 STUDY FEED</Title>
         </Link>
         <Nav />
       </div>

@@ -2,13 +2,7 @@ import React from "react";
 import Card from "../../Common/Card";
 import { useForm } from "react-hook-form";
 import { MdAdd } from "react-icons/md";
-import {
-  ErrorMessage,
-  NameInputContainer,
-  SubmitButton,
-  SubscribeItemForm,
-  UrlInputContainer,
-} from "./style";
+import { ErrorMessage, InputContainer, SubmitButton, SubscribeItemForm } from "./style";
 
 interface formValues {
   name: string;
@@ -23,17 +17,19 @@ const AddSubscribeItem: React.FC<AddSubscribeItemProps> = ({ onAddItem }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<formValues>();
 
   const submitHandler = async (data: formValues) => {
     await onAddItem(data);
+    reset();
   };
 
   return (
     <Card>
       <SubscribeItemForm onSubmit={handleSubmit(submitHandler)}>
-        <NameInputContainer>
+        <InputContainer>
           <input
             className={errors.name && "error"}
             type="text"
@@ -44,8 +40,8 @@ const AddSubscribeItem: React.FC<AddSubscribeItemProps> = ({ onAddItem }) => {
             })}
           />
           {errors.name && <ErrorMessage role="alert">{errors.name.message}</ErrorMessage>}
-        </NameInputContainer>
-        <UrlInputContainer>
+        </InputContainer>
+        <InputContainer>
           <input
             className={errors.rssLink && "error"}
             type="url"
@@ -55,7 +51,7 @@ const AddSubscribeItem: React.FC<AddSubscribeItemProps> = ({ onAddItem }) => {
           {errors.rssLink && (
             <ErrorMessage role="alert">{errors.rssLink.message}</ErrorMessage>
           )}
-        </UrlInputContainer>
+        </InputContainer>
         <SubmitButton
           type="submit"
           disabled={isSubmitting}

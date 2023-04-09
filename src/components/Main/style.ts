@@ -38,7 +38,7 @@ export const MainContainer = styled.div`
 
   ${customMedia.lessThan("md")`
     align-items: flex-start;
-    padding: 80px 20px;
+    padding: 20px;
   `}
 `;
 
@@ -48,7 +48,11 @@ export const MainText = styled.div`
 
 export const Title = styled.h2`
   ${text.textStyle30()}
-  font-weight: 500;
+  font-weight: 600;
+
+  ${customMedia.lessThan("md")`
+    ${text.textStyle24()}
+  `}
 `;
 
 export const Instructions = styled.ul`
@@ -58,6 +62,12 @@ export const Instructions = styled.ul`
     ${text.textStyle18()}
     margin-bottom: 5px;
   }
+
+  ${customMedia.lessThan("md")`
+     li {
+       ${text.textStyle16()}
+     }
+  `}
 `;
 
 export const Highlight = styled.span`

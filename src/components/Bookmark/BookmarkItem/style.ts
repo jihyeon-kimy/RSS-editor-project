@@ -2,8 +2,9 @@ import styled from "styled-components";
 import color from "../../../styles/color";
 import { flexBox } from "../../../styles/postion";
 import text from "../../../styles/text";
+import { customMedia } from "../../../styles/GlobalStyle";
 
-export const PostItemContainer = styled.li`
+export const BookmarkItemContainer = styled.li`
   border-bottom: 1px solid ${color.border};
   padding: 15px 10px;
   position: relative;
@@ -19,11 +20,11 @@ export const PostItemContainer = styled.li`
   }
 `;
 
-export const PostItemHeader = styled.div`
+export const BookmarkItemHeader = styled.div`
   ${flexBox({ justify: "space-between" })}
 
   h5 {
-    ${text.textStyle16()}
+    ${text.textStyle20()}
     display: inline-block;
     width: 100%;
     margin-bottom: 15px;
@@ -31,6 +32,10 @@ export const PostItemHeader = styled.div`
     font-weight: 600;
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    ${customMedia.lessThan("md")`
+      ${text.textStyle18()}
+    `}
   }
 `;
 
@@ -43,10 +48,6 @@ export const CheckBox = styled.button`
 
   .full {
     display: none;
-  }
-
-  .bookmark {
-    color: ${color.blueDark};
   }
 
   .delete {
@@ -63,7 +64,7 @@ export const CheckBox = styled.button`
   }
 `;
 
-export const PostItemContent = styled.p`
+export const BookmarkItemContent = styled.p`
   ${text.textStyle13(color.secondary)}
   width: 100%;
   margin-bottom: 20px;

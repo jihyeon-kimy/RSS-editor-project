@@ -1,7 +1,7 @@
 import { useSnackbar } from "notistack";
 import { useCallback, useEffect, useState } from "react";
 import uuid from "react-uuid";
-import { FB_GetBookmarkList, FB_UpdateSubscribeList } from "../api/bookmark";
+import { FB_GetBookmarkList, FB_UpdateBookmarkList } from "../api/bookmark";
 import { bookmarkItem } from "../types/bookmark";
 
 const useBookmark = () => {
@@ -40,7 +40,7 @@ const useBookmark = () => {
       }
       updatedBookmarkList = [...bookmarkList, filteredPost];
     }
-    await FB_UpdateSubscribeList(updatedBookmarkList);
+    await FB_UpdateBookmarkList(updatedBookmarkList);
     await getBookmarkList();
     enqueueSnackbar("북마크 되었습니다.", {
       autoHideDuration: 2000,
@@ -52,7 +52,7 @@ const useBookmark = () => {
     event.stopPropagation();
     const updatedBookmarkList = bookmarkList?.filter((item) => item.id !== id);
 
-    await FB_UpdateSubscribeList(updatedBookmarkList);
+    await FB_UpdateBookmarkList(updatedBookmarkList);
     await getBookmarkList();
     enqueueSnackbar("북마크된 피드가 삭제되었습니다.", {
       autoHideDuration: 2000,

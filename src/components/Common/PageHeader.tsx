@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import text from "../../styles/text";
+import { customMedia } from "../../styles/GlobalStyle";
 
 interface PageHeaderProps {
   title: string;
@@ -35,11 +36,23 @@ const Title = styled.div`
   animation: ${Slide} 600ms ease-in-out;
 
   h3 {
-    ${text.textStyle24()};
+    ${text.textStyle30()};
     margin-bottom: 10px;
   }
 
   strong {
-    ${text.textStyle18()};
+    ${text.textStyle20()};
+    font-weight: 500;
   }
+
+  ${customMedia.lessThan("md")`
+    h3{
+      ${text.textStyle24()};
+      margin-bottom: 5px;
+    }
+
+    strong{
+      ${text.textStyle18()};
+    }
+  `}
 `;

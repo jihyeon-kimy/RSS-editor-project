@@ -36,6 +36,13 @@ const textStyle18 = (textColor: string = color.primary) => css`
   letter-spacing: -0.002em;
 `;
 
+const textStyle20 = (textColor: string = color.primary) => css`
+  color: ${textColor};
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: -0.002em;
+`;
+
 const textStyle24 = (textColor: string = color.primary) => css`
   color: ${textColor};
   font-size: 24px;
@@ -56,6 +63,7 @@ const text = {
   textStyle14,
   textStyle16,
   textStyle18,
+  textStyle20,
   textStyle24,
   textStyle30,
 };

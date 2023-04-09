@@ -6,8 +6,15 @@ import text from "../../../styles/text";
 
 export const SubscribeItemForm = styled.form`
   ${flexBox({ justify: "space-between" })}
-  padding-bottom: 10px;
+  padding: 10px;
 
+  ${customMedia.lessThan("md")`
+    ${flexBox({ direction: "column" })}
+  `}
+`;
+
+export const InputContainer = styled.div`
+  width: 40%;
   input {
     ${text.textStyle16()}
     width: 100%;
@@ -29,31 +36,13 @@ export const SubscribeItemForm = styled.form`
     }
   }
 
-  div {
-    position: relative;
-    margin-right: 5px;
-
-    ${customMedia.lessThan("md")`
-    width: 85%;
-    margin: 10px 0;
-  `}
-  }
-
   ${customMedia.lessThan("md")`
-    ${flexBox({ direction: "column", alignItem: "flex-start" })}
+    width: 100%;
+    margin-bottom: 20px;
   `}
-`;
-
-export const NameInputContainer = styled.div`
-  width: 20%;
-`;
-
-export const UrlInputContainer = styled.div`
-  width: 80%;
 `;
 
 export const SubmitButton = styled.button`
-  ${flexBox({})}
   width: 40px;
   height: 40px;
   margin-left: 5px;
@@ -69,10 +58,6 @@ export const SubmitButton = styled.button`
     background-color: ${color.red};
     transform: rotate(45deg);
   }
-
-  ${customMedia.lessThan("md")`
-  position: absolute;
-  right: 10px;`}
 `;
 
 export const ErrorMessage = styled.small`
@@ -80,5 +65,5 @@ export const ErrorMessage = styled.small`
   display: block;
   position: absolute;
   bottom: 10;
-  font-weight: 600;
+  font-weight: 500;
 `;

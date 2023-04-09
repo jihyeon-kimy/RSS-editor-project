@@ -11,6 +11,7 @@ const BookmarkDetail = () => {
 
   useEffect(() => {
     setBookmarkPost(bookmarkList[+postId!]);
+    window.scrollTo(0, 0);
   }, [bookmarkList, postId]);
 
   return (

@@ -9,7 +9,7 @@ export const FB_GetBookmarkList = async () => {
   return userSubscribeList.data;
 };
 
-export const FB_UpdateSubscribeList = async (updatedBookmarkList: bookmarkItem[]) => {
+export const FB_UpdateBookmarkList = async (updatedBookmarkList: bookmarkItem[]) => {
   return await customDatabaseAxios.put(
     `/${getUserDataFromStorage("email")}/like.json`,
     updatedBookmarkList

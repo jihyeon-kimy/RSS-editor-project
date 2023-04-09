@@ -21,9 +21,9 @@ export const PostHeader = styled.div`
   }
 
   ${customMedia.lessThan("md")`
-  h2{
-    ${text.textStyle18()}
-  }
+    h2{
+      ${text.textStyle18()}
+    }
   `}
 `;
 
@@ -34,6 +34,7 @@ export const Updated = styled.span`
 
 export const PostContent = styled.div`
   ${text.textStyle14()}
+  width: 100%;
 
   p {
     margin-bottom: 20px;
@@ -58,7 +59,13 @@ export const PostContent = styled.div`
 
   code {
     overflow-wrap: break-word;
-    max-width: 100%;
+    width: 100%;
     display: inline-block;
+  }
+
+  table {
+    display: inline-block;
+    width: 100%;
+    overflow: auto;
   }
 `;

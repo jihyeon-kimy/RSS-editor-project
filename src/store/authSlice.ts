@@ -7,11 +7,9 @@ export const authSlice = createSlice({
     isLoggedIn: false,
   },
   reducers: {
-    // 로그인 실패 시
     logoutReducer: (state) => {
       state.isLoggedIn = false;
     },
-    // 로그인 성공시
     loginReducer: (state) => {
       state.isLoggedIn = true;
     },

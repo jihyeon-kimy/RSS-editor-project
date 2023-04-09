@@ -6,7 +6,6 @@ import useBookmark from "../../hooks/useBookmark";
 import { useSnackbar } from "notistack";
 import List from "./List";
 import PageHeader from "../Common/PageHeader";
-import Card from "../Common/Card";
 import { LastUpdated } from "./style";
 
 const PostList = () => {
@@ -39,9 +38,7 @@ const PostList = () => {
     <>
       <PageHeader title="피드 리스트" subTitle="편하게 모아보는 꿀같은 피드" />
       <LastUpdated>LastUpdated: {new Date(lastUpdated).toLocaleString()}</LastUpdated>
-      <Card>
-        <List onBookmark={addBookmarkHandler} />
-      </Card>
+      <List onBookmark={addBookmarkHandler} />
     </>
   );
 };

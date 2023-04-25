@@ -25,7 +25,6 @@ const PostItem: React.FC<PostItemProps> = ({
   author,
   date,
   onBookmark,
-
   onClick,
 }) => {
   return (

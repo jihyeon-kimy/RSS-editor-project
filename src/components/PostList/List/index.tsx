@@ -6,15 +6,29 @@ import CorsError from "../CorsError";
 import PostItem from "../PostItem";
 import Card from "../../Common/Card";
 import { PostList } from "./style";
+import { useSnackbar } from "notistack";
+import { selectIsLoggedIn } from "../../../store/authSlice";
+import useBookmark from "../../../hooks/useBookmark";
 
-interface ListProps {
-  onBookmark: (event: React.MouseEvent, id: string) => void;
-}
-
-const List: React.FC<ListProps> = ({ onBookmark }) => {
+const List = () => {
   const { routeTo } = useRouter();
-  const postLoadingStatus = useAppSelector(selectStatus);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const postList = useAppSelector(selectPosts);
+  const postLoadingStatus = useAppSelector(selectStatus);
+  const { addBookmarkPost } = useBookmark();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const addBookmarkHandler = (event: React.MouseEvent, id: string) => {
+    event.stopPropagation();
+    if (!isLoggedIn) {
+      enqueueSnackbar("로그인 후 이용 가능합니다.", {
+        autoHideDuration: 2000,
+        variant: "info",
+      });
+      return;
+    }
+    addBookmarkPost(postList?.[+id]);
+  };
 
   if (postLoadingStatus === "Loading") {
     return (
@@ -33,7 +47,7 @@ const List: React.FC<ListProps> = ({ onBookmark }) => {
     );
   }
 
-  if (postLoadingStatus === "Fail" || postList?.length === 0) {
+  if (postLoadingStatus === "Fail") {
     return (
       <Card>
         <CorsError />
@@ -51,7 +65,7 @@ const List: React.FC<ListProps> = ({ onBookmark }) => {
           summary={item?.["content:encodedSnippet"] || item?.contentSnippet}
           author={item?.creator || item?.author}
           date={item?.isoDate?.substr(0, 10)}
-          onBookmark={onBookmark}
+          onBookmark={addBookmarkHandler}
           onClick={() => {
             routeTo(`/post/${idx}`);
           }}

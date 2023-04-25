@@ -60,7 +60,7 @@ const Login = () => {
           onClick={() => {
             routeTo("/");
           }}>
-          RSS-Reader
+          STUDY FEED
         </h3>
         <HeaderMessage>
           <span>회원이 아니신가요?</span>

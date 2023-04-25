@@ -50,7 +50,7 @@ const Signup = () => {
           onClick={() => {
             routeTo("/");
           }}>
-          RSS-Reader
+          STUDY FEED
         </h3>
         <HeaderMessage>
           <span>회원이신가요?</span>

@@ -1,6 +1,5 @@
 {
   "name": "my-app",
-  "homepage": "https://jihyeon-kimy.github.io/RSS-editor-project/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

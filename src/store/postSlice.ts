@@ -6,18 +6,28 @@ import { subscribeItem } from "../types/subscribe";
 
 const CORS_PROXY = "https://cors-anywhere.herokuapp.com/";
 
+const parseFeed = async (url: string): Promise<any> => {
+  const parser = new RSSParser();
+  try {
+    const parsedPost = await parser.parseURL(url);
+    return parsedPost.items;
+  } catch {
+    const parsedPost = await parser.parseURL(CORS_PROXY + url);
+    return parsedPost.items;
+  }
+};
+
 export const getPostsReducer = createAsyncThunk(
   "postSlice/asyncGetPosts",
   async (subscribeList: subscribeItem[]) => {
-    const parser = new RSSParser();
     const currentTime = new Date().toString();
     let parsedPosts: any[] = [];
 
     for await (let subscribeItem of subscribeList) {
       if (!subscribeItem.enabled) continue;
       try {
-        let parsedPost = await parser.parseURL(subscribeItem.rssLink);
-        parsedPosts = [...parsedPosts, ...parsedPost.items];
+        const parsedPost = await parseFeed(subscribeItem.rssLink);
+        parsedPosts = [...parsedPosts, ...parsedPost];
       } catch {
         console.log(
           `🚒삐뽀삐보🚒 ${subscribeItem.name} 피드 파싱 에러 발생! RSSLink 오타 혹은 CORS보안 이슈로 브라우저에 로드가 안되는 것인지 확인하세요!`

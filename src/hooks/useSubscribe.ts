@@ -8,7 +8,7 @@ const useSubscribe = () => {
 
   const getSubscribeList = useCallback(async () => {
     const subscribeListRes = await FB_GetSubscribeList();
-    subscribeListRes && setSubscribeList(Object.values(subscribeListRes));
+    setSubscribeList(Object.values(subscribeListRes));
   }, []);
 
   const addSubscribeItem = async (subscribItem: { name: string; rssLink: string }) => {
